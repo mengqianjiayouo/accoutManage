@@ -67,7 +67,7 @@
     "webpack-manifest-plugin": "2.0.4",
     "workbox-webpack-plugin": "4.2.0"
   },
-  "homepage": "https://github.com/mengqianjiayouo/account",
+  "homepage": "https://github.com/mengqianjiayouo/accoutManage",
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
