@@ -1,12 +1,33 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import { createStore, applyMiddleware } from "redux";
+import { Provider } from "react-redux";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import thunk from "redux-thunk";
+import { persistStore, persistReducer } from "redux-persist";
+import storageSession from "redux-persist/lib/storage/session";
+import { PersistGate } from "redux-persist/integration/react";
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+import "./index.css";
+import "./sass/style.scss";
+import Reducer from "./reducers";
+
+import App from "./App";
+
+const persistConfig = {
+  key: "root",
+  storage: storageSession,
+  whitelist: ["platId"]
+};
+const persistedReducer = persistReducer(persistConfig, Reducer);
+let store = createStore(persistedReducer, applyMiddleware(thunk));
+
+const persistor = persistStore(store);
+ReactDOM.render(
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <App />
+    </PersistGate>
+  </Provider>,
+  document.getElementById("root")
+);
