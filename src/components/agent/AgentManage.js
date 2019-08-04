@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {Input,Select,Table,Button,Icon,Modal,Form,Col,Checkbox,Radio,Row,Tabs, Alert } from 'antd';
 import {Api} from '../.././common/_ajax.js'
-import PowerModalTabs from './PowerModalTabs.js'
 import edit_icon from '../../image/edit.svg'
 import lock_icon from '../../image/lock.svg'
 import user_icon from '../../image/juese.svg'
@@ -15,7 +14,7 @@ const formItemLayout = {
     labelCol: {span: 7},
     wrapperCol: {span: 14},
 }
-class AdminManage extends Component {
+class AgentManage extends Component {
 
     constructor(props) {
         super(props)
@@ -82,19 +81,11 @@ class AdminManage extends Component {
     setColumn(){
         const {formData} = this.state;
         const columns = [{
-            title: '会员名称',
+            title: '代理商名称',
             dataIndex: 'index',
             key: 'index',
         }, {
-            title: '会员等级',
-            dataIndex: 'name',
-            key: 'name',
-        }, {
-            title: '会员数量',
-            dataIndex: 'username',
-            key: 'username',
-        }, {
-            title: '会员操作',
+            title: '代理商意向用户数',
             key: 'action',
             render:(a)=>{
                 return (
@@ -136,6 +127,30 @@ class AdminManage extends Component {
                     </div>
                 )
             }
+        }, {
+            title: '代理商佣金',
+            dataIndex: 'name',
+            key: 'name',
+        }, {
+            title: '代理商付款用户数',
+            dataIndex: 'username',
+            key: 'username',
+        }, {
+            title: '代理商未付款用户数',
+            key: 'platforms',
+            render:(a)=>{
+                let ary = a.platforms,
+                    str = '',
+                    ary2= [];
+
+                if(ary.length> 0 ){
+                    ary.map((a)=>{
+                        ary2.push(a.platform_name)
+                    })
+                }
+                str = ary.length>0? ary2.join(','):''
+                return str
+            }
         }
         ];
         this.setState({
@@ -147,33 +162,6 @@ class AdminManage extends Component {
         let {formData,platList} = this.state;
         formData.isEdit = true;
         formData.user_id = user_id;
-       /*  api.$get('/api/account/user_detail/',{user_id},res=>{
-            formData.username = res.username;
-            formData.name = res.name;
-            formData.status = res.status;
-            formData.phone = res.phone;
-            res.platforms.map((a)=>{
-                formData.platforms.push(a.platform_id+'')
-            })
-            this.setState({
-                formData
-            },()=>{
-                platList.map((a)=>{
-                    a.checked = false;
-                    formData.platforms.map(b=>{
-                        if(a.platform_id+'' == b){
-                            a.checked = true;
-                        }
-                    })
-                })
-                this.setState({
-                    modalTitle:'用户编辑',
-                    addEditVisible:true,
-                    isAdd:false,
-                    platList
-                })
-            })
-        }) */
 
     }
 
@@ -257,12 +245,12 @@ class AdminManage extends Component {
     }
 
     getData(){
-        this.setState({
-            // loading:true,
+        /* this.setState({
+            loading:true,
             locale:{
                 emptyText:'没有相关数据'
             }
-        })
+        }) */
         const {platform_id,kw,page_size,page_num} = this.state;
         let obj = {page_size,page_num};
         if (platform_id !=' '){
@@ -271,26 +259,7 @@ class AdminManage extends Component {
         if (kw){
             obj.kw = kw;
         }
-       /*  api.$get('/api/account/user_list/',obj,(res)=>{
-            res.data.map((a,b)=>{
-                a.index = b + 1 +page_size*(page_num-1);
-                a.key = b + 1;
-            })
-            this.setState({
-                userList:res.data,
-                loading:false,
-                total_size:res.total_num
-            })
-            if (res.data.length <= 0){
-                this.setState({
-                    locale:{
-                        emptyText:'没有相关数据'
-                    }
-                })
-            }
-        }) */
-
-       /*  api.$get('/api/account/platform_list/', null, (res) => {
+      /*  api.$get('/api/account/platform_list/', null, (res) => {
             res.map((a, b) => {
                 a.index = b + 1;
                 a.key = b + 1;
@@ -514,51 +483,12 @@ class AdminManage extends Component {
         }
         if (isAdd){
             /*创建新用户*/
-            let {username,name,phone,status,platforms} = formData
-            let platform_ids = platforms.join(',');
-            status = status?1:0
-           /*  api.$post('/api/account/create_user/',{username,name,phone,status,platform_ids},(res)=>{
-
-                if (!res.errmsg){
-
-                    this.setState({
-                        addEditVisible:false,
-                        page_num:1,
-                    })
-                    this.clearCreateForm()
-                    Modal.success({
-                        title:'提示',
-                        content:'账号创建成功！',
-                        onOk:()=>{
-                            this.getData()
-                        }
-                    })
-                }
-            }) */
+            
         }else{
             let {username,name,phone,status,platforms,user_id} = formData;
             let platform_ids = platforms.join(',');
             status = status?1:0
-           /*  api.$post('/api/account/user_detail/',{username,name,phone,status,platform_ids,user_id},(res)=>{
-                if (!res.errmsg){
-                    this.clearCreateForm()
-                    this.setState({
-                        addEditVisible:false
-                    })
-                    Modal.success({
-                        title:'提示',
-                        content:'账号修改成功！',
-                        onOk:()=>{
-                            this.getData()
-                        }
-                    })
-                }else{
-                    Modal.warning({
-                        title:'提示',
-                        content: res.errmsg
-                    })
-                }
-            }) */
+           
         }
     }
 
@@ -593,47 +523,7 @@ class AdminManage extends Component {
                 </div>
                 <div className="power_set">
                     <span className="modal_title">角色权限设置</span>
-                    <Tabs activeKey={this.state.activeKey} onChange={(key)=>{
-                        const {user_id,plat_id,role_ids,permission_ids} = this.state;
-                        this.setState({
-                            activeKey:key,
-                            plat_id:key
-                        })
-                    }}>
-                        {
-                            this.state.platList.map((a)=>{
-                                return this.state.powerPlatShow.map((b,c)=>{
-                                    if (b == a.platform_id){
-                                        return (
-                                        <TabPane tab={a.platform_name+''} key={b + ''}>
-                                            <PowerModalTabs
-                                                key={c+''}
-                                                user_id={this.state.user_id}
-                                                name={a.platform_name}
-                                                active={this.state.activeKey}
-                                                id={a.platform_id}
-                                                changePermissionList={(ids)=>{
-                                                    this.setState({
-                                                        permission_ids:ids
-                                                    })
-                                                }}
-                                                changeRoleList={(ids)=>{
-                                                    this.setState({
-                                                        role_ids:ids
-                                                    })
-                                                }}
-                                                changePlatId={(id)=>{
-                                                    this.setState({
-                                                        plat_id:id
-                                                    })
-                                                }}
-                                            />
-                                        </TabPane>)
-                                    }
-                                })
-                            })
-                        }
-                    </Tabs>
+                   
                 </div>
             </Modal>
         )
@@ -698,4 +588,4 @@ class AdminManage extends Component {
 
 }
 
-export default AdminManage
+export default AgentManage

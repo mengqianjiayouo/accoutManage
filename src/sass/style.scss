@@ -75,6 +75,10 @@
 .ant-btn:focus,
 .ant-btn:hover {
   border-color: $minColor;
+
+  span {
+    color: $minColor;
+  }
 }
 
 .ant-radio-button-wrapper-focused,
@@ -87,6 +91,10 @@
 .ant-pagination-prev:hover a,
 .ant-btn:focus,
 .ant-btn:hover {
+  span {
+    color: $minColor;
+  }
+
   color: $minColor;
 }
 
@@ -714,7 +722,7 @@
   position: absolute;
   top: 34%;
   left: 50%;
-  margin-left: -100px;
+  margin-left: -140px !important;
   width: 280px;
   line-height: 24px;
   padding: 20px 48px 20px 38px;
@@ -724,7 +732,7 @@
   }
 
   .ant-alert-icon {
-    top: 25px;
+    // top: 1px;
   }
 
   .ant-alert-close-icon {

@@ -4,7 +4,7 @@ import SideBar from "./SideBar";
 import HeaderSide from "./Header";
 import { Tabs, Dropdown, Layout, Menu, Icon } from "antd";
 import { connect } from "react-redux";
-import { add, remove, other, removeall } from "../actions.js";
+import { add, remove, other, removeall, addActiveKey } from "../actions.js";
 // import {Api} from '../common/_ajax.js'
 import $ from "jquery";
 //用户管理
@@ -15,6 +15,10 @@ import RoleManage from "./role/RoleManage.js";
 import PowerManage from "./power/PowerManage.js";
 //平台管理
 import PlatManage from "./plat/PlatManage.js";
+//代理商管理
+import AgentManage from "./agent/AgentManage.js";
+//仓库管理
+import StoreManage from "./store/StoreManage.jsx";
 
 const { Header, Sider, Content } = Layout;
 
@@ -22,17 +26,33 @@ const TabPane = Tabs.TabPane;
 // const api = new Api()
 
 const TabsName = {
-  AdminManage: "用户管理",
+  AdminManage: "会员管理",
+  AgentManage: "代理商管理",
   RoleManage: "角色管理",
   PowerManage: "权限管理",
-  PlatManage: "平台管理"
+  UserProductManage: "用户产品",
+  PlatProductManage: "平台产品",
+  StoreManage: "仓库管理",
+  //   PlatManage: "平台管理",
+  OrderManage: "订单管理",
+  NoLogisistManage: "订单未发物流预警",
+  ContractorManage: "第三方承包方管理",
+  FactoryManage: "厂家管理"
 };
 
 let TabsContent = {
   AdminManage: <AdminManage />,
-  RoleManage: <RoleManage />,
+  AgentManage: <AgentManage />,
+  //   RoleManage: <RoleManage />,
   PowerManage: <PowerManage />,
-  PlatManage: <PlatManage />
+  UserProductManage: <PowerManage />,
+  PlatProductManage: <PowerManage />,
+  StoreManage: <StoreManage />,
+  //   PlatManage: <PlatManage />,
+  OrderManage: <PlatManage />,
+  ContractorManage: <PlatManage />,
+  NoLogisistManage: <PlatManage />,
+  FactoryManage: <PlatManage />
 };
 
 class App extends Component {
@@ -47,11 +67,12 @@ class App extends Component {
 
   componentWillMount() {
     this.setState({
-      activeKey: this.props.tabs[0]
+      activeKey: this.props.addActiveKey
     });
   }
   componentDidMount() {
     this.showMenu2();
+
     this.getTabsInfo(this.props);
     $(window).resize(() => {
       this.changeTabMaxwidth();
@@ -78,6 +99,7 @@ class App extends Component {
     this.setState({
       activeKey
     });
+    this.props.dispatch(addActiveKey(activeKey));
   }
 
   onTabEdit(targetKey, action) {
@@ -87,6 +109,7 @@ class App extends Component {
       this.setState({
         activeKey: targetKey
       });
+      dispatch(addActiveKey(targetKey));
       this.getTabsInfo(this.props);
       return;
     }
@@ -104,10 +127,14 @@ class App extends Component {
           this.setState({
             activeKey: this.state.tipAry[index - 1]
           });
+          dispatch(addActiveKey(this.state.tipAry[index - 1]));
         } else {
           this.setState({
             activeKey: this.state.tipAry[index + 1]
           });
+          if (this.state.tipAry[index + 1]) {
+            dispatch(addActiveKey(this.state.tipAry[index + 1]));
+          }
         }
       }
       dispatch(remove(targetKey));
@@ -118,6 +145,7 @@ class App extends Component {
       this.setState({
         activeKey: targetKey
       });
+      dispatch(addActiveKey(targetKey));
       dispatch(other(targetKey));
       return;
     }
@@ -182,7 +210,7 @@ class App extends Component {
       >
         <Menu.Item key="0">关闭当前页</Menu.Item>
         <Menu.Item key="1">关闭其他页</Menu.Item>
-        <Menu.Item key="2">关闭所有页</Menu.Item>
+        {/* <Menu.Item key="2">关闭所有页</Menu.Item> */}
       </Menu>
     );
     return (
