@@ -186,7 +186,6 @@ class RoleManage extends Component {
             title: '序号',
             dataIndex: 'index',
             key: 'index',
-            width: 60
         }, {
             title: '操作',
             key: 'action',

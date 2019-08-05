@@ -23,17 +23,17 @@ const formItemLayout = {
   labelCol: { span: 7 },
   wrapperCol: { span: 14 }
 };
-class StoreManage extends Component {
+class OrderManage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       storeList: [
         {
-          order_id: 1,
           index: "--",
           freight_number: "--",
           pc_attrice: "--",
-          address: "--"
+          address: "--",
+          order_id: 1
         }
       ],
       reason: "",
@@ -116,23 +116,6 @@ class StoreManage extends Component {
     this.setState({
       //   loading: true
     });
-    // api.$get("/api/account/platform_list/", null, res => {
-    //   res.map((a, b) => {
-    //     a.index = b + 1;
-    //     a.key = b + 1;
-    //   });
-    //   this.setState({
-    //     platList: res,
-    //     loading: false
-    //   });
-    //   if (res.length <= 0) {
-    //     this.setState({
-    //       locale: {
-    //         emptyText: "没有相关数据"
-    //       }
-    //     });
-    //   }
-    // });
   }
 
   // 操作弹窗
@@ -318,7 +301,8 @@ class StoreManage extends Component {
               backgroundcolor: "#fff",
               borderColor: "#d9d9d9",
               color: "#222",
-              marginLeft: "12px"
+              marginLeft: "12px",
+              marginRight: "12px"
             }}
             onClick={() => {
               this.setState(
@@ -335,6 +319,12 @@ class StoreManage extends Component {
           >
             清空
           </Button>
+          <Button>一键发货</Button>
+        </div>
+        <div>
+          <div className="params params-20" style={{ minWidth: "170px" }}>
+            <span>订单数量：0</span>
+          </div>
         </div>
       </div>
     );
@@ -372,4 +362,4 @@ class StoreManage extends Component {
   }
 }
 
-export default StoreManage;
+export default OrderManage;

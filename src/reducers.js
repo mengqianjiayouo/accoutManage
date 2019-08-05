@@ -70,7 +70,6 @@ const tabs = (state = ["AdminManage"], action) => {
 };
 
 const addActiveKey = (state = "AdminManage", action) => {
-  console.log(action);
   switch (action.type) {
     case ADDACTIVEKEY:
       return action.key;

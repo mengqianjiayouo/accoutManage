@@ -19,6 +19,8 @@ import PlatManage from "./plat/PlatManage.js";
 import AgentManage from "./agent/AgentManage.js";
 //仓库管理
 import StoreManage from "./store/StoreManage.jsx";
+//订单管理
+import OrderManage from "./order/OrderManage.jsx";
 
 const { Header, Sider, Content } = Layout;
 
@@ -43,13 +45,13 @@ const TabsName = {
 let TabsContent = {
   AdminManage: <AdminManage />,
   AgentManage: <AgentManage />,
-  //   RoleManage: <RoleManage />,
+  RoleManage: <RoleManage />,
   PowerManage: <PowerManage />,
   UserProductManage: <PowerManage />,
   PlatProductManage: <PowerManage />,
   StoreManage: <StoreManage />,
   //   PlatManage: <PlatManage />,
-  OrderManage: <PlatManage />,
+  OrderManage: <OrderManage />,
   ContractorManage: <PlatManage />,
   NoLogisistManage: <PlatManage />,
   FactoryManage: <PlatManage />
