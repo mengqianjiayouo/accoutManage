@@ -17,7 +17,7 @@ import App from "./App";
 const persistConfig = {
   key: "root",
   storage: storageSession,
-  whitelist: ["tabs", "addActiveKey"]
+  whitelist: ["tabs", "addActiveKey", "login"]
 };
 const persistedReducer = persistReducer(persistConfig, Reducer);
 let store = createStore(persistedReducer, applyMiddleware(thunk));

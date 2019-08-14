@@ -22,72 +22,76 @@ class PowerManage extends Component {
             platform_id: '',
             permission_id: '',
             platName: '',
-            platList: [],
+            PermissList: [{
+                "user_name":"\u8d85\u7ea7\u7ba1\u7406\u5458", //用户名
+                "user_password_update_time":"2019-08-03",     
+                "user_phone":"15220581724",                   // 电话
+                "up_name":"\u4ed3\u5e93\u7ba1\u7406\u5458",   // 角色名称
+                "ur_name":"\u7f16\u8f91\u6388\u6743",         // 权限名称
+                "um_id":"\u7f16\u8f91\u6388\u6743",           // 菜单id
+            },
+        
+            {
+                "user_name":"\u8d85\u7ea7\u7ba1\u7406\u5458", 
+                "user_password_update_time":"2019-08-03",     
+                "user_phone":"15220581724",                  
+                "up_name":"\u4ed3\u5e93\u7ba1\u7406\u5458",  
+                "ur_name":"\u7f16\u8f91\u6388\u6743",        
+                "um_id":"\u7f16\u8f91\u6388\u6743",           
+            }
+        ],
             kw: '',
-            PermissList:[],
+            platList:[],
             loading:false,
             locale:{
                 emptyText:'没有相关数据'
             },
-            isAdd:true,
+            isAdd:false,
             isLook:false,
-            permission_name:'',
-            permissname_status:'',
-            permission_flag:'',
-            permissflag_status:'',
-            permission_desc:'',
+            us_id:'',
+            us_id_status:'',
+            um_code:'',
+            um_code_status:'',
+            parent_id:'',
+            parent_id_status:'',
+            um_title:'',
+            um_title_status:'',
+            um_title_en:'',
+            um_title_en_status:'',
+            um_url:'',
+            um_url_status:'',
+            um_system:'wms',
+            um_system_status:'',
             addEditVisible:false,
             noChoice:false,
             message:'',
             page_size:20,
             page_num:1,
             total_size:0,
+            /* us_id'     权限 (id)
+'um_code'   自定义code
+'parent_id' 父级权限 (id)
+'um_title'  菜单名称 中文
+'um_title_en' 菜单名称 英文
+'um_url'    菜单链接
+'um_system'    当前系统 默认 wms
+ */
         }
     }
 
     componentWillMount() {
 
-        // api.$get(  '/api/account/platform_list/', null, (res) => {
-        //     this.setState({
-        //         platList: res,
-        //     })
-        // });
+      
         this.setColumn();
     }
+
+    componentDidMount(){
+        this.getPermissList()
+    }
     componentWillReceiveProps(){
-        // api.$get(  '/api/account/platform_list/', null, (res) => {
-        //     this.setState({
-        //         platList: res,
-        //     })
-        // });
     }
-    getPermissList(){
-        const {kw,platform_id,page_num,page_size} = this.state;
-        let obj = {};
-        obj.platform_id = platform_id;
-        obj.page_num = page_num;
-        obj.page_size = page_size;
-        if (kw){
-            obj.kw = kw;
-        }
-        this.setState({
-            loading:true
-        })
-        // api.$get(  '/api/account/permission_list/',obj,(res)=>{
-        //     let data = res.data;
-        //     data.map((a,b) => {
-        //         a.index = b+'';
-        //         a.key = b+''
-
-        //     })
-        //     this.setState({
-        //         PermissList:data,
-        //         loading:false,
-        //         total_size:res.total_num
-        //     })
-
-        // })
-    }
+        
+    
     topBar() {
         return (
             <div className="search-title" style={{minWidth: '1170px'}}>
@@ -155,13 +159,31 @@ class PowerManage extends Component {
         )
     }
     setColumn(){
-        const {formData} = this.state;
         const columns = [{
-            title: '序号',
-            dataIndex: 'index',
-            key: 'index',
-            width: 60
+            title: '用户名',
+            dataIndex: 'user_name',
+            key: 'user_name',
         }, {
+            title: '用户密码更新时间',
+            dataIndex: 'user_password_update_time',
+            key: 'user_password_update_time',
+        },  {
+            title: '角色名称',
+            dataIndex: 'up_name',
+            key: 'up_name',
+        },  {
+            title: '电话',
+            dataIndex: 'user_phone',
+            key: 'user_phone',
+        }, {
+            title: '权限名称',
+            dataIndex: 'ur_name',
+            key: 'ur_name',
+        }, {
+            title: '菜单ID',
+            dataIndex: 'um_id',
+            key: 'um_id',
+        },{
             title: '操作',
             key: 'action',
             width: 118,
@@ -170,9 +192,9 @@ class PowerManage extends Component {
                     <div>
                         <img src={edit_icon} className="role_action" alt=""
                              onClick={()=>{
-                                 this.getPermissDetail(a.permission_id)
+                                //  this.getPermissDetail(a.permission_id)
                                  this.setState({
-                                     permission_id:a.permission_id,
+                                    //  permission_id:a.permission_id,
                                      modalTitle:'权限编辑',
                                  })
                              }}
@@ -184,16 +206,16 @@ class PowerManage extends Component {
                                      okText: '确定',
                                      cancelText: '取消',
                                      onOk:()=>{
-                                         this.deletePermiss(a.permission_id)
+                                         this.deletePermiss(a.us_id)
                                      }
                                  })
                              }}
                         />
                         <img src={look_icon} className="role_action" alt=""
                              onClick={()=>{
-                                 this.getPermissDetail(a.permission_id)
+                                 this.getPermissDetail(a.us_id)
                                  this.setState({
-                                     permission_id:a.permission_id,
+                                     us_id:a.us_id,
                                      modalTitle:'权限查看',
                                      isLook:true
                                  })
@@ -202,39 +224,46 @@ class PowerManage extends Component {
                     </div>
                 )
             }
-        }, {
-            title: '权限名称',
-            dataIndex: 'permission_name',
-            key: 'permission_name',
-        }, {
-            title: '标识',
-            dataIndex: 'permission_flag',
-            key: 'permission_flag',
-        }, {
-            title: '备注',
-            dataIndex: 'permission_desc',
-            key: 'permission_desc',
         }
         ];
         this.setState({
             columns
         })
     }
-    getPermissDetail(permission_id){
-        // api.$get(  '/api/account/permission_detail/',{permission_id},res=>{
-        //     this.setState({
-        //         addEditVisible:true,
-        //         isAdd:false,
-        //         permission_flag:res.permission_flag,
-        //         permission_name:res.permission_name,
-        //         permission_desc:res.permission_desc,
-        //     })
-        // })
+    //获取角色权限列表
+    getPermissList(){
+        const {page_num,page_size} = this.state;
+        let obj = {};
+        obj.page_num = page_num;
+        obj.page_size = page_size;
+        
+        this.setState({
+            // loading:true
+        })
+        api.$get('http://118.25.155.176:8080/getUrserRight',null,(res)=>{
+            
+            this.setState({
+                PermissList:res,
+                loading:false,
+                total_size:res.length,
+
+            })
+
+        })
+    }
+    getPermissDetail(us_id){
+        this.setState({
+            addEditVisible:true,
+            isAdd:false,
+        })
 
     }
-    // 编辑和添加
+    // 编辑和添加弹窗
+
     addEditModal(){
-        const {modalTitle,addEditVisible,permission_name,permission_flag,permission_desc,permissflag_status,permissname_status,noChoice} = this.state;
+        const {modalTitle,addEditVisible,us_id,um_code,parent_id,um_title,um_title_en,um_url,um_system,
+            us_id_status,um_code_status,parent_id_status,um_title_status,um_title_en_status,um_url_status,um_system_status,
+            noChoice} = this.state;
         return (
             <Modal
                 title={modalTitle}
@@ -249,39 +278,87 @@ class PowerManage extends Component {
                     )}
 
                 </div>}>
-                <FormItem {...formItemLayout} label={<span><i>*</i>权限名称</span>} validateStatus={permissname_status}>
-                    <Input placeholder="请输入权限名称"
+                <FormItem {...formItemLayout} label={<span><i>*</i>权限id</span>} validateStatus={us_id_status}>
+                    <Input placeholder="请输入权限id"
                            className="input"
                            disabled={this.state.isLook}
-                           value={permission_name}
+                           value={us_id}
                            onChange={(e) => {
                                this.setState({
-                                   permission_name: e.target.value
+                                us_id: e.target.value
                                })
                            }}
                     />
                 </FormItem>
 
-                <FormItem {...formItemLayout} label={<span><i>*</i>权限标识</span>} validateStatus={permissflag_status}>
-                    <Input placeholder="2-12个英文字母"
+                <FormItem {...formItemLayout} label={<span><i>*</i>自定义code</span>} validateStatus={um_code_status}>
+                    <Input placeholder="请输入自定义code"
                            className="input"
-                           value={permission_flag}
+                           value={um_code}
                            disabled={this.state.isLook}
                            onChange={(e) => {
                                this.setState({
-                                   permission_flag: e.target.value
+                                   um_code: e.target.value
                                })
                            }}
                     />
                 </FormItem>
-                <FormItem {...formItemLayout} label="备注" >
+                <FormItem {...formItemLayout} label="父级权限id"  validateStatus={parent_id_status}>
                     <Input placeholder=""
                            className="input"
-                           value={permission_desc}
+                           value={parent_id}
                            disabled={this.state.isLook}
                            onChange={(e) => {
                                this.setState({
-                                   permission_desc: e.target.value
+                                parent_id: e.target.value
+                               })
+                           }}
+                    />
+                </FormItem>
+                <FormItem {...formItemLayout} label="菜单名称（中文）" validateStatus={um_title_status} >
+                    <Input placeholder=""
+                           className="input"
+                           value={um_title}
+                           disabled={this.state.isLook}
+                           onChange={(e) => {
+                               this.setState({
+                                um_title: e.target.value
+                               })
+                           }}
+                    />
+                </FormItem>
+                <FormItem {...formItemLayout} label="菜单名称（英文）" validateStatus={um_title_en_status}>
+                    <Input placeholder=""
+                           className="input"
+                           value={um_title_en}
+                           disabled={this.state.isLook}
+                           onChange={(e) => {
+                               this.setState({
+                                um_title_en: e.target.value
+                               })
+                           }}
+                    />
+                </FormItem>
+                <FormItem {...formItemLayout} label="菜单链接" validateStatus={um_url_status}>
+                    <Input placeholder=""
+                           className="input"
+                           value={um_url}
+                           disabled={this.state.isLook}
+                           onChange={(e) => {
+                               this.setState({
+                                um_url: e.target.value
+                               })
+                           }}
+                    />
+                </FormItem>
+                <FormItem {...formItemLayout} label="当前系统" validateStatus={um_system_status}>
+                    <Input placeholder=""
+                           className="input"
+                           value={um_system}
+                           disabled={this.state.isLook}
+                           onChange={(e) => {
+                               this.setState({
+                                um_system: e.target.value
                                })
                            }}
                     />
@@ -302,22 +379,30 @@ class PowerManage extends Component {
     clearForm(){
         this.setState({
             addEditVisible: false,
-            permission_name:'',
-            permissname_status:'',
-            permission_flag:'',
-            permissflag_status:'',
-            permission_desc:'',
+            us_id:'',
+            us_id_status:'',
+            um_code:'',
+            parent_id:'',
+            um_code_status:'',
+            um_title_en:'',
+            um_title_en_status:'',
+            um_title:'',
+            um_title_status:'',
+            um_url:'',
+            um_url_status:'',
+            um_system:'wms',
+            um_system_status:'',
             isLook:false,
         })
     }
     handleModelOk(){
-        const {isAdd,permission_flag,permission_name,platform_id,permission_id,permission_desc} = this.state;
+        const {isAdd,um_code,us_id,parent_id,um_title,um_title_en,um_url,um_system} = this.state;
 
-        if (!permission_name){
+        if (!us_id){
             this.setState({
                 noChoice:true,
-                message:'您还没有输入权限名称！',
-                permissname_status:'error'
+                message:'您还没有输入权限id！',
+                us_id_status:'error'
             })
             window.setTimeout(()=>{
                 this.setState({
@@ -326,11 +411,76 @@ class PowerManage extends Component {
             },5000)
             return
         }
-        if (!permission_flag){
+        if (!um_code){
             this.setState({
                 noChoice:true,
-                message:'您还没有输入权限标识！',
-                permissflag_status:'error'
+                message:'您还没有输入自定义code！',
+                um_code_status:'error'
+            })
+            window.setTimeout(()=>{
+                this.setState({
+                    noChoice:false,
+                })
+            },5000)
+            return
+        }
+        if (!parent_id){
+            this.setState({
+                noChoice:true,
+                message:'您还没有输入父级权限id！',
+                parent_id_status:'error'
+            })
+            window.setTimeout(()=>{
+                this.setState({
+                    noChoice:false,
+                })
+            },5000)
+            return
+        }
+        if (!um_title){
+            this.setState({
+                noChoice:true,
+                message:'您还没有输入菜单名称（中文）！',
+                um_title_status:'error'
+            })
+            window.setTimeout(()=>{
+                this.setState({
+                    noChoice:false,
+                })
+            },5000)
+            return
+        }
+        if (!um_title_en){
+            this.setState({
+                noChoice:true,
+                message:'您还没有输入菜单名称（英文）！',
+                um_title_en_status:'error'
+            })
+            window.setTimeout(()=>{
+                this.setState({
+                    noChoice:false,
+                })
+            },5000)
+            return
+        }
+        if (!um_url){
+            this.setState({
+                noChoice:true,
+                message:'您还没有输入菜单链接！',
+                um_url_status:'error'
+            })
+            window.setTimeout(()=>{
+                this.setState({
+                    noChoice:false,
+                })
+            },5000)
+            return
+        }
+        if (!um_system){
+            this.setState({
+                noChoice:true,
+                message:'您还没有输入当前系统！',
+                um_system_status:'error'
             })
             window.setTimeout(()=>{
                 this.setState({
@@ -340,64 +490,31 @@ class PowerManage extends Component {
             return
         }
         if (isAdd){
-            /*创建新权限*/
-          /*   api.$post(  '/api/account/create_permission/',{platform_id,permission_name,permission_flag,permission_desc},(res)=>{
-                if (!res.errmsg){
+
+            /*新增按钮点击http://118.25.155.176:8080/addMenu*/
+            api.$post('http://118.25.155.176:8080/addMenu',{
+                us_id,
+                um_code,
+                parent_id,
+                um_title,
+                um_title_en,
+                um_url,
+                um_system 
+            },(res)=>{           
+                if(res.state=== 1){
                     this.setState({
                         addEditVisible:false
                     })
-                    Modal.success({
-                        title:'提示',
-                        content:'权限创建成功！',
-                        onOk:()=>{
-                            this.getPermissList()
-                            this.clearForm()
-                        }
-                    })
-                }else{
-                    this.setState({
-                        noChoice:true,
-                        message:res.errmsg
-                    })
-                    window.setTimeout(()=>{
-                        this.setState({
-                            noChoice:false,
-                        })
-                    },5000)
-                }
-            }) */
+                    Modal.success({content:"权限添加成功！"})
+                } 
+            })
         }else{
-           /*  api.$post(  '/api/account/permission_detail/',{platform_id,permission_name,permission_flag,permission_id,permission_desc},(res)=>{
-                if (!res.errmsg){
-                    this.setState({
-                        addEditVisible:false
-                    })
-                    Modal.success({
-                        title:'提示',
-                        content:'权限修改成功！',
-                        onOk:()=>{
-                            this.getPermissList()
-                            this.clearForm()
-                        }
-                    })
-                }else{
-                    this.setState({
-                        noChoice:true,
-                        message:res.errmsg
-                    })
-                    window.setTimeout(()=>{
-                        this.setState({
-                            noChoice:false,
-                        })
-                    },5000)
-                }
-            }) */
+
         }
     }
+    /* 操作-删除 */
     deletePermiss(id){
-       /*  api.$post(  '/api/account/delete_permission/',{permission_id:id},()=>{
-            this.getPermissList()
-        }) */
+       
     }
     render() {
         return (

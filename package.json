@@ -73,7 +73,8 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
     "predeploy": "npm run build",
-    "deploy": "gh-pages  -b master -d build"
+    "upload": "node config/upload.js",
+    "deploy": "npm run build && npm run upload"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -91,7 +92,8 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^2.1.0"
+    "gh-pages": "^2.1.0",
+    "qiniu": "^7.2.2"
   },
   "jest": {
     "collectCoverageFrom": [

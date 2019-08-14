@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { add, remove, other, removeall, addActiveKey } from "../actions.js";
 // import {Api} from '../common/_ajax.js'
 import $ from "jquery";
-//用户管理
+//会员管理
 import AdminManage from "./admin/AdminManage.js";
 //角色管理
 import RoleManage from "./role/RoleManage.js";
@@ -21,6 +21,14 @@ import AgentManage from "./agent/AgentManage.js";
 import StoreManage from "./store/StoreManage.jsx";
 //订单管理
 import OrderManage from "./order/OrderManage.jsx";
+//产品库管理 - 平台产品
+import PlatProductManage from "./products/PlatProductManage.jsx";
+//产品库管理 - 平台产品
+import UserProductManage from "./products/UserProductManage.jsx";
+//第三方承包方管理
+import ContractorManage from "./contractor/ContractorManage.jsx";
+//厂家管理
+import FactoryManage from "./factory/FactoryManage.jsx";
 
 const { Header, Sider, Content } = Layout;
 
@@ -47,14 +55,14 @@ let TabsContent = {
   AgentManage: <AgentManage />,
   RoleManage: <RoleManage />,
   PowerManage: <PowerManage />,
-  UserProductManage: <PowerManage />,
-  PlatProductManage: <PowerManage />,
+  UserProductManage: <UserProductManage />,
+  PlatProductManage: <PlatProductManage />,
   StoreManage: <StoreManage />,
   //   PlatManage: <PlatManage />,
   OrderManage: <OrderManage />,
-  ContractorManage: <PlatManage />,
+  ContractorManage: <ContractorManage />,
   NoLogisistManage: <PlatManage />,
-  FactoryManage: <PlatManage />
+  FactoryManage: <FactoryManage />
 };
 
 class App extends Component {
@@ -74,6 +82,11 @@ class App extends Component {
   }
   componentDidMount() {
     this.showMenu2();
+    let isLogin = sessionStorage.getItem("isLogin");
+
+    if (!JSON.parse(isLogin)) {
+      this.props.history.replace("/login");
+    }
 
     this.getTabsInfo(this.props);
     $(window).resize(() => {

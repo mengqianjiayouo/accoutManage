@@ -492,7 +492,6 @@ class AgentManage extends Component {
         }
     }
 
-    //权限
     powerModal(){
         return (
             <Modal
@@ -528,6 +527,7 @@ class AgentManage extends Component {
             </Modal>
         )
     }
+
     resetPasswd(user_id){
 /*         api.$post( '/api/account/reset_password/',{user_id},res=>{
             if(!res.errmsg){
@@ -541,18 +541,7 @@ class AgentManage extends Component {
     render() {
         return (
             <div className="admin">
-                <Button className="add_btn"
-                    onClick={()=>{
-                        this.setState({
-                            addEditVisible:true,
-                            modalTitle:'用户新建',
-                            isAdd:true,
-                        })
-                    }}
-                >
-                    <Icon type="plus" />
-                    新增
-                </Button>
+                
                 {this.topBar()}
                 <div className="tableWarp">
                     <Table

@@ -165,7 +165,9 @@ module.exports = function(webpackEnv) {
         : isEnvDevelopment && "static/js/[name].chunk.js",
       // We inferred the "public path" (such as / or /my-project) from homepage.
       // We use "/" in development.
-      publicPath: publicPath,
+      publicPath: isEnvProduction
+        ? "http://pvr0dzc9o.bkt.clouddn.com/"
+        : publicPath,
       // Point sourcemap entries to original disk location (format as URL on Windows)
       devtoolModuleFilenameTemplate: isEnvProduction
         ? info =>

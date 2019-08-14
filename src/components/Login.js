@@ -74,6 +74,7 @@ class Login extends Component {
 
     this.setState({ isLoading: true });
     dispatch(login({ username: "megnqian" }));
+    sessionStorage.setItem("isLogin", true);
     this.props.history.replace("/");
     /*  $.ajax({
       url: "/api/account/login/",
@@ -110,10 +111,7 @@ class Login extends Component {
       <div className="loginwarp">
         <div className="container">
           <form className="login">
-            <p className="logo">
-              <img src={loginlogo} alt="" />
-            </p>
-            <p className="title">账号管理系统</p>
+            <p className="title">管理系统</p>
             {errmsg ? (
               <div className="err">
                 <Icon

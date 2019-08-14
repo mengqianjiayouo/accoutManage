@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "./logo.svg";
-import { HashRouter as Router, Switch, Route } from "react-router-dom";
-// import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+// import { HashRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import createHistory from "history/createBrowserHistory";
 import pageApp from "./components/App";
 import Login from "./components/Login";

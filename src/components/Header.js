@@ -47,11 +47,12 @@ class Header extends Component {
 
   handleLogout() {
     const { dispatch } = this.props;
-
+    sessionStorage.setItem("isLogin", false);
+    this.props.history.replace("/login");
     /* api.$post("/api/account/logout/", {}, res => {
       dispatch(login(res));
       // localStorage.removeItem('uid')
-      this.props.history.replace("/login");
+      
     }); */
   }
 

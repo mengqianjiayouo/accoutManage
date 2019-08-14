@@ -23,7 +23,7 @@ const formItemLayout = {
   labelCol: { span: 7 },
   wrapperCol: { span: 14 }
 };
-class OrderManage extends Component {
+class FactoryManage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -476,4 +476,4 @@ class OrderManage extends Component {
   }
 }
 
-export default OrderManage;
+export default FactoryManage;

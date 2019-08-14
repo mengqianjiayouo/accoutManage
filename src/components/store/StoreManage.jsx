@@ -15,6 +15,8 @@ import { Api } from "../.././common/_ajax.js";
 import dateformat from "dateformat-util";
 import edit_icon from "../../image/edit.svg";
 import delete_icon from "../../image/delete.svg";
+import $ from "jquery";
+
 const api = new Api();
 const FormItem = Form.Item;
 const reason = ["颜色不对", "尺寸不对", "数量不对", "其他"];
@@ -33,7 +35,8 @@ class StoreManage extends Component {
           index: "--",
           freight_number: "--",
           pc_attrice: "--",
-          address: "--"
+          address: "--",
+          key: 1
         }
       ],
       reason: "",
@@ -87,7 +90,12 @@ class StoreManage extends Component {
         render: a => {
           return (
             <div>
-              <span style={{ cursor: "pointer", marginRight: "10px" }}>
+              <span
+                style={{ cursor: "pointer", marginRight: "10px" }}
+                onClick={() => {
+                  $("#print")[0].contentWindow.print();
+                }}
+              >
                 发货
               </span>
               <span
@@ -341,6 +349,23 @@ class StoreManage extends Component {
   }
 
   render() {
+    let data = [
+      {
+        user_name: "\u8d85\u7ea7\u7ba1\u7406\u5458",
+        user_password_update_time: "2019-08-03 00:00:00",
+        user_phone: "15220581724",
+        up_name: "\u4ed3\u5e93\u7ba1\u7406\u5458",
+        ur_name: "\u7f16\u8f91\u6388\u6743"
+      },
+      {
+        user_name: "\u8d85\u7ea7\u7ba1\u7406\u5458",
+        user_password_update_time: "2019-08-03 00:00:00",
+        user_phone: "15220581724",
+        up_name: "\u4ed3\u5e93\u7ba1\u7406\u5458",
+        ur_name: "\u6dfb\u52a0\u4ea7\u54c1"
+      }
+    ];
+    console.log(data);
     return (
       <div className="admin plat">
         {/* <Button
@@ -356,6 +381,13 @@ class StoreManage extends Component {
           <Icon type="plus" />
           新增
         </Button> */}
+        <iframe
+          src={require("./test2.pdf")}
+          id="print"
+          style={{ display: "none" }}
+          title="123"
+          frameBorder="0"
+        />
         <div className="tableWarp">
           {this.topBar()}
           <Table
