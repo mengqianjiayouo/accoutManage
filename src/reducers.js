@@ -32,7 +32,7 @@ const search = (state = {}, action) => {
       return state;
   }
 };
-const tabs = (state = ["AdminManage"], action) => {
+const tabs = (state = [], action) => {
   switch (action.type) {
     case ADD:
       var flag = false;
@@ -69,7 +69,7 @@ const tabs = (state = ["AdminManage"], action) => {
   }
 };
 
-const addActiveKey = (state = "AdminManage", action) => {
+const addActiveKey = (state = "", action) => {
   switch (action.type) {
     case ADDACTIVEKEY:
       return action.key;

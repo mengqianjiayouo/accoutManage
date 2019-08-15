@@ -29,6 +29,8 @@ import UserProductManage from "./products/UserProductManage.jsx";
 import ContractorManage from "./contractor/ContractorManage.jsx";
 //厂家管理
 import FactoryManage from "./factory/FactoryManage.jsx";
+//财务管理
+import FinancialManage from "./financial/FinancialManage.jsx";
 
 const { Header, Sider, Content } = Layout;
 
@@ -47,22 +49,8 @@ const TabsName = {
   OrderManage: "订单管理",
   NoLogisistManage: "订单未发物流预警",
   ContractorManage: "第三方承包方管理",
-  FactoryManage: "厂家管理"
-};
-
-let TabsContent = {
-  AdminManage: <AdminManage />,
-  AgentManage: <AgentManage />,
-  RoleManage: <RoleManage />,
-  PowerManage: <PowerManage />,
-  UserProductManage: <UserProductManage />,
-  PlatProductManage: <PlatProductManage />,
-  StoreManage: <StoreManage />,
-  //   PlatManage: <PlatManage />,
-  OrderManage: <OrderManage />,
-  ContractorManage: <ContractorManage />,
-  NoLogisistManage: <PlatManage />,
-  FactoryManage: <FactoryManage />
+  FactoryManage: "厂家管理",
+  FinancialManage: "财务管理"
 };
 
 class App extends Component {
@@ -203,7 +191,21 @@ class App extends Component {
   render() {
     const props = this.props;
     let { activeKey } = this.state;
-
+    let TabsContent = {
+      AdminManage: <AdminManage />,
+      AgentManage: <AgentManage />,
+      RoleManage: <RoleManage />,
+      PowerManage: <PowerManage />,
+      UserProductManage: <UserProductManage />,
+      PlatProductManage: <PlatProductManage />,
+      StoreManage: <StoreManage addActiveKey={this.props.addActiveKey} />,
+      //   PlatManage: <PlatManage />,
+      OrderManage: <OrderManage addActiveKey={this.props.addActiveKey} />,
+      ContractorManage: <ContractorManage />,
+      NoLogisistManage: <PlatManage />,
+      FactoryManage: <FactoryManage />,
+      FinancialManage: <FinancialManage />
+    };
     const menu = (
       <Menu
         onClick={e => {

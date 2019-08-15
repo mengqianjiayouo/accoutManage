@@ -29,16 +29,7 @@ class StoreManage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      storeList: [
-        {
-          order_id: 1,
-          index: "--",
-          freight_number: "--",
-          pc_attrice: "--",
-          address: "--",
-          key: 1
-        }
-      ],
+      storeList: [],
       reason: "",
       loading: false,
       columns: [],
@@ -56,17 +47,30 @@ class StoreManage extends Component {
   }
 
   componentDidMount() {
-    this.getData();
+    // this.getData();
     this.setColumn();
+    this.getFocus();
   }
+
+  componentWillReceiveProps(props) {
+    if (props.addActiveKey === "StoreManage") {
+      this.getFocus();
+    }
+  }
+  getFocus() {
+    setTimeout(() => {
+      $(".store_freight")[0].focus();
+    }, 50);
+  }
+
   //产品名称、运单号、产品属性、国外地址、操作 操作：发货、滞留（颜色不对、尺寸不对、数量不对、其他）
 
   setColumn() {
     const columns = [
       {
         title: "产品名称",
-        dataIndex: "index",
-        key: "index"
+        dataIndex: "name",
+        key: "name"
       },
       {
         title: "运单号",
@@ -121,9 +125,25 @@ class StoreManage extends Component {
   }
 
   getData() {
+    let { freight_number } = this.state;
     this.setState({
-      //   loading: true
+      loading: true
     });
+    setTimeout(() => {
+      this.setState({
+        storeList: [
+          {
+            order_id: 1,
+            name: "佛像",
+            freight_number: freight_number,
+            pc_attrice: "--",
+            address: "西班牙",
+            key: 1
+          }
+        ],
+        loading: false
+      });
+    }, 500);
     // api.$get("/api/account/platform_list/", null, res => {
     //   res.map((a, b) => {
     //     a.index = b + 1;
@@ -260,8 +280,12 @@ class StoreManage extends Component {
           <span>运单号：</span>
           <Input
             placeholder="请输入运单号"
+            className="store_freight"
             value={this.state.freight_number}
             style={{ width: "200px" }}
+            onPressEnter={e => {
+              this.getData();
+            }}
             onChange={e => {
               this.setState({
                 freight_number: e.target.value
@@ -349,23 +373,6 @@ class StoreManage extends Component {
   }
 
   render() {
-    let data = [
-      {
-        user_name: "\u8d85\u7ea7\u7ba1\u7406\u5458",
-        user_password_update_time: "2019-08-03 00:00:00",
-        user_phone: "15220581724",
-        up_name: "\u4ed3\u5e93\u7ba1\u7406\u5458",
-        ur_name: "\u7f16\u8f91\u6388\u6743"
-      },
-      {
-        user_name: "\u8d85\u7ea7\u7ba1\u7406\u5458",
-        user_password_update_time: "2019-08-03 00:00:00",
-        user_phone: "15220581724",
-        up_name: "\u4ed3\u5e93\u7ba1\u7406\u5458",
-        ur_name: "\u6dfb\u52a0\u4ea7\u54c1"
-      }
-    ];
-    console.log(data);
     return (
       <div className="admin plat">
         {/* <Button

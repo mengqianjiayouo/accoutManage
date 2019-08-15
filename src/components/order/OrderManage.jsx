@@ -12,9 +12,8 @@ import {
   Select
 } from "antd";
 import { Api } from "../.././common/_ajax.js";
-import dateformat from "dateformat-util";
-import edit_icon from "../../image/edit.svg";
-import delete_icon from "../../image/delete.svg";
+import $ from "jquery";
+
 const api = new Api();
 const FormItem = Form.Item;
 const reason = ["颜色不对", "尺寸不对", "数量不对", "其他"];
@@ -59,6 +58,17 @@ class OrderManage extends Component {
   componentDidMount() {
     this.getData();
     this.setColumn();
+    this.getFocus();
+  }
+  componentWillReceiveProps(props) {
+    if (props.addActiveKey === "OrderManage") {
+      this.getFocus();
+    }
+  }
+  getFocus() {
+    setTimeout(() => {
+      $(".order_freight")[0].focus();
+    }, 50);
   }
   //产品名称、运单号、产品属性、国外地址、操作 操作：发货、滞留（颜色不对、尺寸不对、数量不对、其他）
 
@@ -345,8 +355,13 @@ class OrderManage extends Component {
           <span>运单号：</span>
           <Input
             placeholder="请输入运单号"
+            autoFocus="autofocus"
+            className="order_freight"
             value={search.freight_number}
             style={{ width: "200px" }}
+            onPressEnter={e => {
+              this.getData();
+            }}
             onChange={e => {
               this.setState({
                 search: {

@@ -22,24 +22,7 @@ class PowerManage extends Component {
             platform_id: '',
             permission_id: '',
             platName: '',
-            PermissList: [{
-                "user_name":"\u8d85\u7ea7\u7ba1\u7406\u5458", //用户名
-                "user_password_update_time":"2019-08-03",     
-                "user_phone":"15220581724",                   // 电话
-                "up_name":"\u4ed3\u5e93\u7ba1\u7406\u5458",   // 角色名称
-                "ur_name":"\u7f16\u8f91\u6388\u6743",         // 权限名称
-                "um_id":"\u7f16\u8f91\u6388\u6743",           // 菜单id
-            },
-        
-            {
-                "user_name":"\u8d85\u7ea7\u7ba1\u7406\u5458", 
-                "user_password_update_time":"2019-08-03",     
-                "user_phone":"15220581724",                  
-                "up_name":"\u4ed3\u5e93\u7ba1\u7406\u5458",  
-                "ur_name":"\u7f16\u8f91\u6388\u6743",        
-                "um_id":"\u7f16\u8f91\u6388\u6743",           
-            }
-        ],
+            PermissList: [],
             kw: '',
             platList:[],
             loading:false,
