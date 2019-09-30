@@ -9,11 +9,14 @@ import {
   Menu,
   Dropdown,
   Alert,
-  Select
+  Select,
+  DatePicker
 } from "antd";
-import { Api } from "../.././common/_ajax.js";
+import { Api } from "../.././server/_ajax.js";
 import $ from "jquery";
-
+// import moment from "moment";
+// const dateFormat = "YYYY-MM-DD";
+// const { RangePicker } = DatePicker;
 const api = new Api();
 const FormItem = Form.Item;
 const reason = ["颜色不对", "尺寸不对", "数量不对", "其他"];
@@ -32,7 +35,8 @@ class OrderManage extends Component {
           freight_number: "--",
           pc_attrice: "--",
           address: "--",
-          order_id: 1
+          order_id: 1,
+          key: 1
         }
       ],
       reason: "",
@@ -135,8 +139,9 @@ class OrderManage extends Component {
   }
 
   getData() {
+    // let { start_time, end_time } = this.state.search;
     this.setState({
-      //   loading: true
+      // loading: true
     });
   }
 
@@ -350,11 +355,11 @@ class OrderManage extends Component {
     const { search } = this.state;
     return (
       <div className="search-title" style={{ minWidth: "1170px" }}>
-        {/*关键字*/}
+        {/*货号*/}
         <div className="params params-20" style={{ minWidth: "170px" }}>
-          <span>运单号：</span>
+          <span>货号：</span>
           <Input
-            placeholder="请输入运单号"
+            placeholder="请输入货号"
             autoFocus="autofocus"
             className="order_freight"
             value={search.freight_number}
@@ -412,7 +417,26 @@ class OrderManage extends Component {
             })}
           </Select>
         </div>
-
+        {/* <div className="params params-20">
+          选择时间：
+          <RangePicker
+            value={[
+              moment(search.start_time, dateFormat),
+              moment(search.end_time, dateFormat)
+            ]}
+            allowClear={false}
+            format={dateFormat}
+            onChange={(date, dateString) => {
+              this.setState({
+                search: {
+                  ...search,
+                  start_time: dateString[0],
+                  end_time: dateString[1]
+                }
+              });
+            }}
+          />
+        </div> */}
         {/*查询和清空*/}
         <div className="params" style={{ marginRight: "60px" }}>
           <Button

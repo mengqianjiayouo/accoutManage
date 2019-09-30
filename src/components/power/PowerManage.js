@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Input, Select, Table, Button, Icon, Modal, Form, Col, Checkbox, Radio, Row, Tabs ,Alert} from 'antd';
-import {Api} from '../.././common/_ajax.js'
+import {Api} from '../.././server/_ajax.js'
 import edit_icon from '../../image/edit.svg'
 import look_icon from '../../image/look.svg'
 import delete_icon from '../../image/delete.svg'
@@ -223,7 +223,7 @@ class PowerManage extends Component {
         this.setState({
             // loading:true
         })
-        api.$get('http://118.25.155.176:8080/getUrserRight',null,(res)=>{
+       /*  api.$get('http://118.25.155.176:8080/getUrserRight',null,(res)=>{
             
             this.setState({
                 PermissList:res,
@@ -232,7 +232,7 @@ class PowerManage extends Component {
 
             })
 
-        })
+        }) */
     }
     getPermissDetail(us_id){
         this.setState({

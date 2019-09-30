@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Input, Select, Table, Button, Icon, Modal, Form, Col, Checkbox, Radio, Row, Tabs} from 'antd';
-import {Api} from '../.././common/_ajax.js'
+import {Api} from '../.././server/_ajax.js'
 const TabPane = Tabs.TabPane;
 const CheckboxGroup = Checkbox.Group;
 const api = new Api();

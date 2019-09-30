@@ -11,7 +11,7 @@ import {
   Alert,
   Select
 } from "antd";
-import { Api } from "../.././common/_ajax.js";
+import { Api } from "../.././server/_ajax.js";
 import dateformat from "dateformat-util";
 import edit_icon from "../../image/edit.svg";
 import delete_icon from "../../image/delete.svg";

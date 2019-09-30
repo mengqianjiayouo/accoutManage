@@ -5,6 +5,7 @@ import { login, search } from "../actions";
 import { Api } from "../common/_ajax";
 import { Input } from "antd";
 import { Menu, Dropdown, Icon } from "antd";
+import { clearCookie } from "../server/cookies";
 const api = new Api();
 const history = createBrowserHistory();
 
@@ -46,14 +47,10 @@ class Header extends Component {
   }
 
   handleLogout() {
-    const { dispatch } = this.props;
-    sessionStorage.setItem("isLogin", false);
-    this.props.history.replace("/login");
-    /* api.$post("/api/account/logout/", {}, res => {
-      dispatch(login(res));
-      // localStorage.removeItem('uid')
-      
-    }); */
+    clearCookie("authorization");
+    clearCookie("ApiKey");
+    clearCookie("token_type");
+    this.props.history.push("/login");
   }
 
   handleChange() {

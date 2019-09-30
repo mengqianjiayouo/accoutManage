@@ -5,7 +5,7 @@ import HeaderSide from "./Header";
 import { Tabs, Dropdown, Layout, Menu, Icon } from "antd";
 import { connect } from "react-redux";
 import { add, remove, other, removeall, addActiveKey } from "../actions.js";
-// import {Api} from '../common/_ajax.js'
+// import {Api} from '../server/_ajax.js'
 import $ from "jquery";
 //会员管理
 import AdminManage from "./admin/AdminManage.js";
@@ -31,11 +31,12 @@ import ContractorManage from "./contractor/ContractorManage.jsx";
 import FactoryManage from "./factory/FactoryManage.jsx";
 //财务管理
 import FinancialManage from "./financial/FinancialManage.jsx";
-
+import { getCookie } from "../server/cookies";
+import { Api } from "../server/_ajax";
 const { Header, Sider, Content } = Layout;
 
 const TabPane = Tabs.TabPane;
-// const api = new Api()
+const api = new Api();
 
 const TabsName = {
   AdminManage: "会员管理",
@@ -70,12 +71,12 @@ class App extends Component {
   }
   componentDidMount() {
     this.showMenu2();
-    let isLogin = sessionStorage.getItem("isLogin");
-
-    if (!JSON.parse(isLogin)) {
-      this.props.history.replace("/login");
+    let authorization = getCookie("authorization"),
+      apiKey = getCookie("ApiKey");
+    if (!authorization || !apiKey) {
+      this.props.history.push("/login");
+      return;
     }
-
     this.getTabsInfo(this.props);
     $(window).resize(() => {
       this.changeTabMaxwidth();

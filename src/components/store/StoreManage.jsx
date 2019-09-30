@@ -11,7 +11,7 @@ import {
   Alert,
   Select
 } from "antd";
-import { Api } from "../.././common/_ajax.js";
+import { Api } from "../.././server/_ajax.js";
 import dateformat from "dateformat-util";
 import edit_icon from "../../image/edit.svg";
 import delete_icon from "../../image/delete.svg";
@@ -19,7 +19,7 @@ import $ from "jquery";
 
 const api = new Api();
 const FormItem = Form.Item;
-const reason = ["颜色不对", "尺寸不对", "数量不对", "其他"];
+const reason = ["颜色不对", "有破损", "数量不对", "违禁物品"];
 
 const formItemLayout = {
   labelCol: { span: 7 },
@@ -141,6 +141,7 @@ class StoreManage extends Component {
             key: 1
           }
         ],
+        freight_number: "",
         loading: false
       });
     }, 500);

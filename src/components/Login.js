@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import $ from "jquery";
 import { login } from "../actions";
-import { Button, Input, Icon } from "antd";
+import { Button, Input, Icon, Modal } from "antd";
 import loginlogo from "../image/dash_logo.svg";
 import loginfont from "../image/loginfont.svg";
 import loginTitle from "../image/loginTitle.svg";
@@ -14,7 +14,10 @@ import login_word2 from "../image/login_word2.svg";
 import login_seal from "../image/login_seal.png";
 import user from "../image/user.svg";
 import pass from "../image/password.svg";
-
+import { Api } from "../server/_ajax.js";
+import { apiList } from "../server/apiMap";
+import { setCookie, getCookie } from "../server/cookies";
+const api = new Api();
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -32,6 +35,12 @@ class Login extends Component {
   componentWillMount() {}
 
   componentDidMount() {
+    let authorization = getCookie("authorization"),
+      apiKey = getCookie("ApiKey");
+    if (authorization && authorization !== "" && apiKey && apiKey !== "") {
+      this.props.history.push("/");
+      return;
+    }
     window.addEventListener("keyup", this.handleKeyUp);
   }
 
@@ -68,38 +77,28 @@ class Login extends Component {
     if (!password) return this.setState({});
 
     let data = {
-      username: username,
-      password: password
+      userName: username,
+      password: password,
+      grant_type: "password"
     };
 
     this.setState({ isLoading: true });
-    dispatch(login({ username: "megnqian" }));
-    sessionStorage.setItem("isLogin", true);
-    this.props.history.replace("/");
-    /*  $.ajax({
-      url: "/api/account/login/",
-      type: "POST",
-      data: data,
-      dataType: "json",
-      beforeSend: function(xhr) {
-        xhr.withCredentials = true;
-      },
-      crossDomain: true,
-      success: res => {
-        if (res.data.errmsg) {
-          this.setState({
-            errmsg: res.data.errmsg,
-            isLoading: false
-          });
-          return;
-        }
-        // dispatch(login(res.data));
+    // dispatch(login({ username: "megnqian" }));
 
+    api.$post(apiList.login.path, data, res => {
+      if (res.access_token && res.ApiKey && res.token_type) {
         this.setState({ isLoading: false });
-
-        this.props.history.replace("/");
+        setCookie("authorization", res.access_token);
+        setCookie("ApiKey", res.ApiKey);
+        setCookie("token_type", res.token_type);
+        this.props.history.push("/");
+      } else {
+        Modal.warning({
+          title: "提示",
+          content: "登录出错了，请刷新后重试!!"
+        });
       }
-    }); */
+    });
   }
 
   render() {

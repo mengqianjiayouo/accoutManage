@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Menu } from "antd";
-import { Api } from ".././common/_ajax.js";
+import { Api } from ".././server/_ajax.js";
 import side_admin from "../image/side_admin.svg";
 import side_permiss from "../image/side_permiss.svg";
 import side_plat from "../image/side_plat.svg";
@@ -47,7 +47,7 @@ class SideBar extends Component {
       selectedKey: "",
       checkedMenu: "",
       defKey: "",
-      userList: []
+      userList: ["超级管理员"]
     };
   }
 
@@ -63,6 +63,7 @@ class SideBar extends Component {
   }
 
   componentWillReceiveProps(props) {}
+
   getPermissList() {
     let { page_num, page_size, defKey } = this.state;
     let obj = {};
@@ -72,7 +73,7 @@ class SideBar extends Component {
     this.setState({
       // loading:true
     });
-    api.$get("http://118.25.155.176:8080/getUrserRight", null, res => {
+   /*  api.$get("http://118.25.155.176:8080/getUrserRight", null, res => {
       let ary = [];
       res.map(a => {
         ary.push(a.up_name);
@@ -84,8 +85,8 @@ class SideBar extends Component {
         }
       });
 
-      this.setState({ userList: ary });
-    });
+      // this.setState({ userList: ary });
+    }); */
   }
   addTabs(name) {
     this.props.onTabEdit(name, "add");

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Input,Select,Table,Button,Icon,Modal,Form,Col,Checkbox,Radio,Row,Tabs, Alert } from 'antd';
-import {Api} from '../.././common/_ajax.js'
+import {Api} from '../.././server/_ajax.js'
 import edit_icon from '../../image/edit.svg'
 import lock_icon from '../../image/lock.svg'
 import user_icon from '../../image/juese.svg'
