@@ -2,11 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import createBrowserHistory from "history/createBrowserHistory";
 import { login, search } from "../actions";
-import { Api } from "../common/_ajax";
 import { Input } from "antd";
 import { Menu, Dropdown, Icon } from "antd";
 import { clearCookie } from "../server/cookies";
-const api = new Api();
 const history = createBrowserHistory();
 
 class Header extends Component {
@@ -50,7 +48,7 @@ class Header extends Component {
     clearCookie("authorization");
     clearCookie("ApiKey");
     clearCookie("token_type");
-    this.props.history.push("/login");
+    this.props.history.replace("/login");
   }
 
   handleChange() {
@@ -143,7 +141,6 @@ class Header extends Component {
               className="colorMin header-logout"
               onClick={this.handleLogout.bind(this)}
             >
-              {" "}
               退出
             </a>
           </div>

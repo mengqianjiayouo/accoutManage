@@ -18,7 +18,7 @@ import { Api } from "../../server/_ajax.js";
 import edit_icon from "../../image/edit.svg";
 import lock_icon from "../../image/lock.svg";
 import user_icon from "../../image/juese.svg";
-import { apiList } from "../../server/apiMap.js";
+import { apiList1 } from "../../server/apiMap.js";
 import { getCookie } from "../../server/cookies";
 const api = new Api();
 const Option = Select.Option;
@@ -298,7 +298,7 @@ class AdminManage extends Component {
     const { platform_id, kw, page_size, page_num } = this.state;
     let obj = { pageSize: page_size, pageIndex: page_num, key: kw };
 
-    api.$post(apiList.memberList.path, obj, res => {
+    api.$post(apiList1.memberList.path, obj, res => {
       this.setState({
         userList: res.Items,
         total_size: res.total
@@ -535,7 +535,7 @@ class AdminManage extends Component {
       /*创建新用户*/
       let { password, name, phone, status, isCompany } = formData;
       api.$post(
-        apiList.createMember.path,
+        apiList1.createMember.path,
         {
           password,
           name,
@@ -563,7 +563,7 @@ class AdminManage extends Component {
     } else {
       let { password, name, phone, status, user_id, isCompany } = formData;
       api.$post(
-        apiList.updateMember.path,
+        apiList1.updateMember.path,
         {
           Id: user_id,
           name,
@@ -601,7 +601,7 @@ class AdminManage extends Component {
       content: "确定删除当前账户？",
       onOk: () => {
         api.$post(
-          apiList.deleteMember.path + "/" + id,
+          apiList1.deleteMember.path + "/" + id,
           { membrId: id },
           res => {
             if (res.Success) {
@@ -700,7 +700,7 @@ class AdminManage extends Component {
       return;
     }
     api.$post(
-      apiList.changeAccount.path + "/" + money_id,
+      apiList1.changeAccount.path + "/" + money_id,
       { Id: money_id, money: parseFloat(money) },
       res => {
         if (res.Success) {
@@ -740,15 +740,7 @@ class AdminManage extends Component {
     };
     return (
       <div className="admin">
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            position: "absolute",
-            top: -30,
-            right: 0
-          }}
-        >
+        <div className="add_btns">
           <Button
             className="add_btn"
             style={{

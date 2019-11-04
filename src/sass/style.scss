@@ -5,6 +5,7 @@
 @import 'searthTitle';
 @import 'admin';
 @import 'role';
+@import 'messageCreate';
 
 
 .ant-table-wrapper {
@@ -549,6 +550,7 @@
 .content {
   margin: 0 10px;
   padding: 0;
+  padding-top: 10px;
   word-wrap: break-word;
   word-break: break-all;
   height: 100%;

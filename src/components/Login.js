@@ -15,7 +15,7 @@ import login_seal from "../image/login_seal.png";
 import user from "../image/user.svg";
 import pass from "../image/password.svg";
 import { Api } from "../server/_ajax.js";
-import { apiList } from "../server/apiMap";
+import { apiList1 } from "../server/apiMap";
 import { setCookie, getCookie } from "../server/cookies";
 const api = new Api();
 class Login extends Component {
@@ -85,7 +85,8 @@ class Login extends Component {
     this.setState({ isLoading: true });
     // dispatch(login({ username: "megnqian" }));
 
-    api.$post(apiList.login.path, data, res => {
+    api.$post(apiList1.login.path, data, res => {
+      console.log(res);
       if (res.access_token && res.ApiKey && res.token_type) {
         this.setState({ isLoading: false });
         setCookie("authorization", res.access_token);

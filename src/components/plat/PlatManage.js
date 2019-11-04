@@ -283,7 +283,7 @@ class PlatManage extends Component {
     }
     if (isAdd) {
       /*创建新权限*/
-    /*   api.$post(
+      /*   api.$post(
         "/api/account/create_platform/",
         { platform_id, platform_name, platform_flag },
         res => {
@@ -313,7 +313,7 @@ class PlatManage extends Component {
         }
       ); */
     } else {
-     /*  api.$post(
+      /*  api.$post(
         "/api/account/platform_detail/",
         { platform_id, platform_name, platform_flag, platform_id },
         res => {
@@ -348,19 +348,22 @@ class PlatManage extends Component {
   render() {
     return (
       <div className="admin plat">
-        <Button
-          className="add_btn"
-          onClick={() => {
-            this.setState({
-              addEditVisible: true,
-              modalTitle: "平台新建",
-              isAdd: true
-            });
-          }}
-        >
-          <Icon type="plus" />
-          新增
-        </Button>
+        <div className="add_btns">
+          <Button
+            className="add_btn"
+            onClick={() => {
+              this.setState({
+                addEditVisible: true,
+                modalTitle: "平台新建",
+                isAdd: true
+              });
+            }}
+          >
+            <Icon type="plus" />
+            新增
+          </Button>
+        </div>
+
         <div className="tableWarp">
           <Table
             columns={this.state.columns}

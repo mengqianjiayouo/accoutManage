@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import SideBar from "./SideBar";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+// import createHistory from "history/createBrowserHistory";
+import createHistory from "history/createHashHistory";
 
 import HeaderSide from "./Header";
 import { Tabs, Dropdown, Layout, Menu, Icon } from "antd";
 import { connect } from "react-redux";
 import { add, remove, other, removeall, addActiveKey } from "../actions.js";
-// import {Api} from '../server/_ajax.js'
 import $ from "jquery";
 //会员管理
 import AdminManage from "./admin/AdminManage.js";
@@ -31,10 +33,13 @@ import ContractorManage from "./contractor/ContractorManage.jsx";
 import FactoryManage from "./factory/FactoryManage.jsx";
 //财务管理
 import FinancialManage from "./financial/FinancialManage.jsx";
+import MessageCreate from "./messageControl/MessageCreate.jsx";
 import { getCookie } from "../server/cookies";
 import { Api } from "../server/_ajax";
 const { Header, Sider, Content } = Layout;
-
+const history = createHistory({
+  basename: "/"
+});
 const TabPane = Tabs.TabPane;
 const api = new Api();
 
@@ -43,6 +48,7 @@ const TabsName = {
   AgentManage: "代理商管理",
   RoleManage: "角色管理",
   PowerManage: "权限管理",
+  MessageCreate: "消息管理",
   UserProductManage: "用户产品",
   PlatProductManage: "平台产品",
   StoreManage: "仓库管理",
@@ -73,10 +79,10 @@ class App extends Component {
     this.showMenu2();
     let authorization = getCookie("authorization"),
       apiKey = getCookie("ApiKey");
-    if (!authorization || !apiKey) {
+    /* if (!authorization || !apiKey) {
       this.props.history.push("/login");
       return;
-    }
+    } */
     this.getTabsInfo(this.props);
     $(window).resize(() => {
       this.changeTabMaxwidth();
@@ -197,6 +203,7 @@ class App extends Component {
       AgentManage: <AgentManage />,
       RoleManage: <RoleManage />,
       PowerManage: <PowerManage />,
+      MessageCreate: <MessageCreate />,
       UserProductManage: <UserProductManage />,
       PlatProductManage: <PlatProductManage />,
       StoreManage: <StoreManage addActiveKey={this.props.addActiveKey} />,
@@ -256,7 +263,7 @@ class App extends Component {
               <HeaderSide {...props} />
             </Header>
             <Content className="content">
-              {this.state.tipAry.length > 0 ? (
+              {/* this.state.tipAry.length > 0 ? (
                 <Tabs
                   onChange={val => {
                     this.onTabChange(val);
@@ -284,7 +291,8 @@ class App extends Component {
                     );
                   })}
                 </Tabs>
-              ) : null}
+              ) : null */}
+              {this.props.children}
             </Content>
           </Layout>
         </Layout>

@@ -1,6 +1,7 @@
 // import React from 'react'
 // import {HashRouter as Router, Route, Redirect} from 'react-router'
 import createHistory from "history/createBrowserHistory";
+// import createHistory from "history/createHashHistory";
 import { Modal } from "antd";
 import $ from "jquery";
 import { getCookie, clearCookie } from "./cookies";
@@ -20,12 +21,22 @@ class Api {
   $post(url, data, success, error) {
     return this.$ajax("POST", url, data, success, error);
   }
+  $postJSON(url, data, success, error) {
+    return this.$ajax(
+      "POST",
+      url,
+      data,
+      success,
+      error,
+      "application/json;charset=utf-8"
+    );
+  }
 
   $delete(url, data, success, error) {
     return this.$ajax("DELETE", url, data, success, error);
   }
 
-  $ajax(method, url, data, success, error) {
+  $ajax(method, url, data, success, error, contentType) {
     let _this = this;
 
     this._locks[url] = 1;
@@ -35,7 +46,7 @@ class Api {
     return $.ajax({
       type: method,
       url: url,
-      data: data,
+      data: contentType ? JSON.stringify(data) : data,
       dataType: "json",
       beforeSend: function(xhr) {
         xhr.withCredentials = true;
@@ -47,17 +58,12 @@ class Api {
         }
       },
       crossDomain: true,
+      contentType: contentType
+        ? "application/json; charset=UTF-8"
+        : "application/x-www-form-urlencoded; charset=UTF-8",
       success: function(resp /* status*/ /*, xhr*/) {
         delete _this._locks[url];
-
         resp = resp ? resp : {};
-
-        if (resp.errnum == -1) {
-          return history.replace("/login");
-        }
-        if (resp.errnum == 10103) return history.replace("/login");
-
-        if (resp.errmsg) return _this.ajaxError(resp.errmsg, error);
 
         success && success((resp.data && resp.data) || resp);
       },
@@ -67,7 +73,6 @@ class Api {
           delete _this._locks[url];
           _this.ajaxError("登录过期，请重新登录！", error, true);
         }
-        console.log(xhr);
         delete _this._locks[url];
         _this.ajaxError(null, error);
       }

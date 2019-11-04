@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Menu } from "antd";
 import { Api } from ".././server/_ajax.js";
+import { add, remove, other, removeall, addActiveKey } from "../actions.js";
+
 import side_admin from "../image/side_admin.svg";
 import side_permiss from "../image/side_permiss.svg";
 import side_plat from "../image/side_plat.svg";
@@ -11,6 +13,7 @@ const api = new Api();
   AgentManage: "代理商管理",
   RoleManage: "角色管理",
   PowerManage: "权限管理",
+  MessageCreate: "消息管理",
   UserProductManage: "用户产品",
   PlatProductManage: "平台产品",
   StoreManage: "仓库管理",
@@ -25,6 +28,7 @@ const roleSide = {
     "AgentManage",
     "RoleManage",
     "PowerManage",
+    "MessageCreate",
     "UserProductManage",
     "PlatProductManage",
     "StoreManage",
@@ -54,7 +58,7 @@ class SideBar extends Component {
   componentDidMount() {
     this.setState(
       {
-        defKey: this.props.defKey
+        defKey: this.props.addActiveKey
       },
       () => {
         this.getPermissList();
@@ -73,7 +77,7 @@ class SideBar extends Component {
     this.setState({
       // loading:true
     });
-   /*  api.$get("http://118.25.155.176:8080/getUrserRight", null, res => {
+    /*  api.$get("http://118.25.155.176:8080/getUrserRight", null, res => {
       let ary = [];
       res.map(a => {
         ary.push(a.up_name);
@@ -88,8 +92,62 @@ class SideBar extends Component {
       // this.setState({ userList: ary });
     }); */
   }
+  onTabEdit(targetKey, action) {
+    const { dispatch } = this.props;
+    if (action == "add") {
+      dispatch(add(targetKey));
+      this.setState({
+        activeKey: targetKey
+      });
+      dispatch(addActiveKey(targetKey));
+      return;
+    }
+
+    if (action == "remove") {
+      let index = "";
+      this.state.tipAry.map((a, b) => {
+        if (a == targetKey) {
+          index = b;
+        }
+      });
+
+      if (this.state.activeKey == targetKey) {
+        if (index > 0) {
+          this.setState({
+            activeKey: this.state.tipAry[index - 1]
+          });
+          dispatch(addActiveKey(this.state.tipAry[index - 1]));
+        } else {
+          this.setState({
+            activeKey: this.state.tipAry[index + 1]
+          });
+          if (this.state.tipAry[index + 1]) {
+            dispatch(addActiveKey(this.state.tipAry[index + 1]));
+          }
+        }
+      }
+      dispatch(remove(targetKey));
+
+      return;
+    }
+    if (action == "other") {
+      this.setState({
+        activeKey: targetKey
+      });
+      dispatch(addActiveKey(targetKey));
+      dispatch(other(targetKey));
+      return;
+    }
+    if (action == "removeall") {
+      /*this.setState({
+             activeKey:targetKey
+             })*/
+      dispatch(removeall(targetKey));
+      return;
+    }
+  }
   addTabs(name) {
-    this.props.onTabEdit(name, "add");
+    this.onTabEdit(name, "add");
   }
   render() {
     const { userList } = this.state;
@@ -102,6 +160,7 @@ class SideBar extends Component {
               <span
                 onClick={() => {
                   this.addTabs("AdminManage");
+                  this.props.history.push("/adminManage");
                   this.setState({
                     defKey: "AdminManage"
                   });
@@ -121,6 +180,7 @@ class SideBar extends Component {
               <span
                 onClick={() => {
                   this.addTabs("AgentManage");
+                  this.props.history.push("/agentManage");
                   this.setState({
                     defKey: "AgentManage"
                   });
@@ -135,6 +195,7 @@ class SideBar extends Component {
               <span
                 onClick={() => {
                   this.addTabs("RoleManage");
+                  this.props.history.push("/roleManage");
                   this.setState({
                     defKey: "RoleManage"
                   });
@@ -150,6 +211,7 @@ class SideBar extends Component {
               <span
                 onClick={() => {
                   this.addTabs("PowerManage");
+                  this.props.history.push("/powerManage");
                   this.setState({
                     defKey: "PowerManage"
                   });
@@ -159,12 +221,29 @@ class SideBar extends Component {
               </span>
             </Menu.Item>
           ) : null}
+          {userList.indexOf("超级管理员") !== -1 ||
+          userList.indexOf("权限管理员") !== -1 ? (
+            <Menu.Item key="MessageCreate">
+              <span
+                onClick={() => {
+                  this.addTabs("MessageCreate");
+                  this.props.history.push("/messageManage");
+                  this.setState({
+                    defKey: "MessageCreate"
+                  });
+                }}
+              >
+                消息管理
+              </span>
+            </Menu.Item>
+          ) : null}
           {userList.indexOf("超级管理员") !== -1 ? (
             <Menu.SubMenu key="sub1" title={<span>产品库管理</span>}>
               <Menu.Item
                 key="UserProductManage"
                 onClick={() => {
                   this.addTabs("UserProductManage");
+                  this.props.history.push("/userProductManage");
                   this.setState({
                     defKey: "UserProductManage"
                   });
@@ -176,6 +255,7 @@ class SideBar extends Component {
                 key="PlatProductManage"
                 onClick={() => {
                   this.addTabs("PlatProductManage");
+                  this.props.history.push("/platProductManage");
                   this.setState({
                     defKey: "PlatProductManage"
                   });
@@ -191,6 +271,7 @@ class SideBar extends Component {
               <span
                 onClick={() => {
                   this.addTabs("OrderManage");
+                  this.props.history.push("/orderManage");
                   this.setState({
                     defKey: "OrderManage"
                   });
@@ -206,6 +287,7 @@ class SideBar extends Component {
               <span
                 onClick={() => {
                   this.addTabs("StoreManage");
+                  this.props.history.push("/storeManage");
                   this.setState({
                     defKey: "StoreManage"
                   });
@@ -234,6 +316,7 @@ class SideBar extends Component {
               <span
                 onClick={() => {
                   this.addTabs("ContractorManage");
+                  this.props.history.push("/contractorManage");
                   this.setState({
                     defKey: "ContractorManage"
                   });
@@ -248,12 +331,28 @@ class SideBar extends Component {
               <span
                 onClick={() => {
                   this.addTabs("FactoryManage");
+                  this.props.history.push("/factoryManage");
                   this.setState({
                     defKey: "FactoryManage"
                   });
                 }}
               >
                 厂家管理
+              </span>
+            </Menu.Item>
+          ) : null}
+          {userList.indexOf("超级管理员") !== -1 ? (
+            <Menu.Item key="yijianManage">
+              <span
+                onClick={() => {
+                  this.addTabs("yijianManage");
+                  this.props.history.push("/yijianManage");
+                  this.setState({
+                    defKey: "yijianManage"
+                  });
+                }}
+              >
+                意见箱
               </span>
             </Menu.Item>
           ) : null}
@@ -264,11 +363,14 @@ class SideBar extends Component {
 }
 
 const mapStateToProps = state => {
-  const { user } = state.login;
-
+  return { ...state };
+};
+const mapDispatchToProps = dispatch => {
   return {
-    user
+    dispatch
   };
 };
-
-export default connect(mapStateToProps)(SideBar);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SideBar);

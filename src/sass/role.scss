@@ -8,10 +8,12 @@
     vertical-align: middle;
   }
 
+  .add_btns {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;  }
+
   .add_btn {
-    position: absolute;
-    right: 0;
-    top: -30px;
     height: 30px;
     line-height: 30px;
     border-color: $minColor;
