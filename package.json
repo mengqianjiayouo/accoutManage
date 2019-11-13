@@ -76,7 +76,6 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
     "predeploy": "npm run build",
-    "upload": "node config/upload.js",
     "deploy": "npm run build && npm run upload"
   },
   "eslintConfig": {

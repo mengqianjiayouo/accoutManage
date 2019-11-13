@@ -28,18 +28,10 @@ class MessageCreate extends Component {
       subCateObj: {},
       id: ""
     };
-    /*  this.type = this.props.history.location.state
-      ? this.props.history.location.state.type
-      : "";
-    this.id = this.props.history.location.state
-      ? this.props.history.location.state.id
-      : ""; */
   }
 
   componentDidMount = () => {
-    console.log(ContentUtils);
     this.getCateList();
-    // console.log(this.props.history.location);
     if (
       this.props.history.location &&
       this.props.history.location.params &&

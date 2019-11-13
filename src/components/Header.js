@@ -22,17 +22,6 @@ class Header extends Component {
   }
 
   componentDidMount() {
-    const { user, dispatch } = this.props;
-
-    /* api.$get(  '/api/account/login/', null, res => {
-
-            if (!res.user_name){
-                return this.props.history.push('/login')
-            }
-            dispatch(login(res))
-
-        }) */
-
     window.addEventListener("keyup", this.handleKeyUp);
   }
 
@@ -78,42 +67,6 @@ class Header extends Component {
     if (event.keyCode === 13 && searching) this.searchEvent();
   }
 
-  /* searchEvent(value) {
-
-        const {dispatch, type} = this.props
-
-        if (!value) return this.setState({
-            searchValidationState: 'error',
-        })
-
-        api.$get(  '/dash/search/', {text: value, type: type}, res => {
-
-            dispatch(search({res, value, type}))
-            history.replace('/search')
-        })
-
-    }*/
-
-  /*  search() {
-
-        const {/!*searchValidationState,*!/ isSearch} = this.state
-        const Search = Input.Search
-        /!*const selectAfter = (
-         <Icon type="search" onClick={ !isSearch ? this.handleSearch.bind(this) : null }/>
-         )*!/
-        return (
-
-            <Search
-                placeholder="查找上架商品/商家"
-                style={{width: 340,marginRight:25}}
-                onSearch={() => {
-                    !isSearch ? this.handleSearch() : null
-                }}
-            />
-
-        )
-    }*/
-
   render() {
     const { user } = this.props;
 
@@ -152,10 +105,8 @@ class Header extends Component {
 }
 
 const mapStateToProps = state => {
-  const { type } = state.search;
   return {
-    user: state.login.user,
-    type: type || 1
+    user: state.login.user
   };
 };
 

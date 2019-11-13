@@ -5,9 +5,7 @@ import { connect } from "react-redux";
 import $ from "jquery";
 import { login } from "../actions";
 import { Button, Input, Icon, Modal } from "antd";
-import loginlogo from "../image/dash_logo.svg";
 import loginfont from "../image/loginfont.svg";
-import loginTitle from "../image/loginTitle.svg";
 import picture from "../image/picture.png";
 import login_word1 from "../image/login_word1.svg";
 import login_word2 from "../image/login_word2.svg";
@@ -57,8 +55,6 @@ class Login extends Component {
   }
 
   login() {
-    const { dispatch } = this.props;
-
     const { username, password } = this.state;
 
     if (username == "") {
@@ -83,7 +79,6 @@ class Login extends Component {
     };
 
     this.setState({ isLoading: true });
-    // dispatch(login({ username: "megnqian" }));
 
     api.$post(apiList1.login.path, data, res => {
       console.log(res);

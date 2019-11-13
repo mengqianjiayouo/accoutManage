@@ -1,24 +1,10 @@
 import React, { Component } from "react";
-import {
-  Input,
-  Button,
-  Select,
-  Collapse,
-  Modal,
-  Row,
-  Col,
-  Icon,
-  Tabs,
-  Table
-} from "antd";
+import { Modal, Table } from "antd";
 // 引入编辑器样式
 import { Api } from "../../server/_ajax";
-import $ from "jquery";
-import { apiList2, serverPath2 } from "../../server/apiMap";
+import { apiList2 } from "../../server/apiMap";
 import moment from "moment";
-const { TabPane } = Tabs;
 const api = new Api();
-const Option = Select.Option;
 class YijianManage extends Component {
   constructor(props) {
     super(props);
@@ -82,8 +68,6 @@ class YijianManage extends Component {
   }
 
   render() {
-    const { cateObject, subCateObj } = this.state;
-
     const colnums = [
       {
         title: "标题",

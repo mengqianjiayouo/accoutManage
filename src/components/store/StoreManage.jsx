@@ -11,13 +11,8 @@ import {
   Alert,
   Select
 } from "antd";
-import { Api } from "../.././server/_ajax.js";
-import dateformat from "dateformat-util";
-import edit_icon from "../../image/edit.svg";
-import delete_icon from "../../image/delete.svg";
 import $ from "jquery";
 
-const api = new Api();
 const FormItem = Form.Item;
 const reason = ["颜色不对", "有破损", "数量不对", "违禁物品"];
 
@@ -145,23 +140,6 @@ class StoreManage extends Component {
         loading: false
       });
     }, 500);
-    // api.$get("/api/account/platform_list/", null, res => {
-    //   res.map((a, b) => {
-    //     a.index = b + 1;
-    //     a.key = b + 1;
-    //   });
-    //   this.setState({
-    //     platList: res,
-    //     loading: false
-    //   });
-    //   if (res.length <= 0) {
-    //     this.setState({
-    //       locale: {
-    //         emptyText: "没有相关数据"
-    //       }
-    //     });
-    //   }
-    // });
   }
 
   // 操作弹窗
@@ -376,19 +354,6 @@ class StoreManage extends Component {
   render() {
     return (
       <div className="admin plat">
-        {/* <Button
-          className="add_btn"
-          onClick={() => {
-            this.setState({
-              addEditVisible: true,
-              modalTitle: "平台新建",
-              isAdd: true
-            });
-          }}
-        >
-          <Icon type="plus" />
-          新增
-        </Button> */}
         <iframe
           src={require("./test2.pdf")}
           id="print"

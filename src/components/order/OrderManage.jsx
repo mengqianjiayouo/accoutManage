@@ -485,19 +485,6 @@ class OrderManage extends Component {
   render() {
     return (
       <div className="admin plat">
-        {/* <Button
-          className="add_btn"
-          onClick={() => {
-            this.setState({
-              addEditVisible: true,
-              modalTitle: "平台新建",
-              isAdd: true
-            });
-          }}
-        >
-          <Icon type="plus" />
-          新增
-        </Button> */}
         <div className="tableWarp">
           {this.topBar()}
           <Table

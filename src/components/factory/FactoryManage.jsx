@@ -11,11 +11,7 @@ import {
   Alert,
   Select
 } from "antd";
-import { Api } from "../.././server/_ajax.js";
-import dateformat from "dateformat-util";
-import edit_icon from "../../image/edit.svg";
-import delete_icon from "../../image/delete.svg";
-const api = new Api();
+
 const FormItem = Form.Item;
 const reason = ["颜色不对", "尺寸不对", "数量不对", "其他"];
 
@@ -446,19 +442,6 @@ class FactoryManage extends Component {
   render() {
     return (
       <div className="admin plat">
-        {/* <Button
-          className="add_btn"
-          onClick={() => {
-            this.setState({
-              addEditVisible: true,
-              modalTitle: "平台新建",
-              isAdd: true
-            });
-          }}
-        >
-          <Icon type="plus" />
-          新增
-        </Button> */}
         <div className="tableWarp">
           {this.topBar()}
           <Table

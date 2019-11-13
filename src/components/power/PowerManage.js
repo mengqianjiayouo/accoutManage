@@ -7,10 +7,7 @@ import {
   Icon,
   Modal,
   Form,
-  Col,
   Checkbox,
-  Radio,
-  Row,
   Tabs,
   Alert
 } from "antd";
@@ -46,32 +43,12 @@ class PowerManage extends Component {
       isLook: false,
       us_id: "",
       us_id_status: "",
-      um_code: "",
-      um_code_status: "",
-      parent_id: "",
-      parent_id_status: "",
-      um_title: "",
-      um_title_status: "",
-      um_title_en: "",
-      um_title_en_status: "",
-      um_url: "",
-      um_url_status: "",
-      um_system: "wms",
-      um_system_status: "",
       addEditVisible: false,
       noChoice: false,
       message: "",
       page_size: 20,
       page_num: 1,
       total_size: 0
-      /* us_id'     权限 (id)
-'um_code'   自定义code
-'parent_id' 父级权限 (id)
-'um_title'  菜单名称 中文
-'um_title_en' 菜单名称 英文
-'um_url'    菜单链接
-'um_system'    当前系统 默认 wms
- */
     };
   }
 
@@ -82,7 +59,6 @@ class PowerManage extends Component {
   componentDidMount() {
     this.getPermissList();
   }
-  componentWillReceiveProps() {}
 
   topBar() {
     return (
@@ -166,6 +142,7 @@ class PowerManage extends Component {
       </div>
     );
   }
+
   setColumn() {
     const columns = [
       {
@@ -264,16 +241,6 @@ class PowerManage extends Component {
     this.setState({
       // loading:true
     });
-    /*  api.$get('http://118.25.155.176:8080/getUrserRight',null,(res)=>{
-            
-            this.setState({
-                PermissList:res,
-                loading:false,
-                total_size:res.length,
-
-            })
-
-        }) */
   }
   getPermissDetail(us_id) {
     this.setState({
@@ -282,25 +249,12 @@ class PowerManage extends Component {
     });
   }
   // 编辑和添加弹窗
-
   addEditModal() {
     const {
       modalTitle,
       addEditVisible,
       us_id,
-      um_code,
-      parent_id,
-      um_title,
-      um_title_en,
-      um_url,
-      um_system,
       us_id_status,
-      um_code_status,
-      parent_id_status,
-      um_title_status,
-      um_title_en_status,
-      um_url_status,
-      um_system_status,
       noChoice
     } = this.state;
     return (
@@ -333,126 +287,19 @@ class PowerManage extends Component {
           {...formItemLayout}
           label={
             <span>
-              <i>*</i>权限id
+              <i>*</i>权限
             </span>
           }
           validateStatus={us_id_status}
         >
           <Input
-            placeholder="请输入权限id"
+            placeholder="请输入权限"
             className="input"
             disabled={this.state.isLook}
             value={us_id}
             onChange={e => {
               this.setState({
                 us_id: e.target.value
-              });
-            }}
-          />
-        </FormItem>
-
-        <FormItem
-          {...formItemLayout}
-          label={
-            <span>
-              <i>*</i>自定义code
-            </span>
-          }
-          validateStatus={um_code_status}
-        >
-          <Input
-            placeholder="请输入自定义code"
-            className="input"
-            value={um_code}
-            disabled={this.state.isLook}
-            onChange={e => {
-              this.setState({
-                um_code: e.target.value
-              });
-            }}
-          />
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="父级权限id"
-          validateStatus={parent_id_status}
-        >
-          <Input
-            placeholder=""
-            className="input"
-            value={parent_id}
-            disabled={this.state.isLook}
-            onChange={e => {
-              this.setState({
-                parent_id: e.target.value
-              });
-            }}
-          />
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="菜单名称（中文）"
-          validateStatus={um_title_status}
-        >
-          <Input
-            placeholder=""
-            className="input"
-            value={um_title}
-            disabled={this.state.isLook}
-            onChange={e => {
-              this.setState({
-                um_title: e.target.value
-              });
-            }}
-          />
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="菜单名称（英文）"
-          validateStatus={um_title_en_status}
-        >
-          <Input
-            placeholder=""
-            className="input"
-            value={um_title_en}
-            disabled={this.state.isLook}
-            onChange={e => {
-              this.setState({
-                um_title_en: e.target.value
-              });
-            }}
-          />
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="菜单链接"
-          validateStatus={um_url_status}
-        >
-          <Input
-            placeholder=""
-            className="input"
-            value={um_url}
-            disabled={this.state.isLook}
-            onChange={e => {
-              this.setState({
-                um_url: e.target.value
-              });
-            }}
-          />
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="当前系统"
-          validateStatus={um_system_status}
-        >
-          <Input
-            placeholder=""
-            className="input"
-            value={um_system}
-            disabled={this.state.isLook}
-            onChange={e => {
-              this.setState({
-                um_system: e.target.value
               });
             }}
           />
@@ -489,22 +336,14 @@ class PowerManage extends Component {
       isLook: false
     });
   }
+
   handleModelOk() {
-    const {
-      isAdd,
-      um_code,
-      us_id,
-      parent_id,
-      um_title,
-      um_title_en,
-      um_url,
-      um_system
-    } = this.state;
+    const { isAdd, us_id } = this.state;
 
     if (!us_id) {
       this.setState({
         noChoice: true,
-        message: "您还没有输入权限id！",
+        message: "您还没有输入权限！",
         us_id_status: "error"
       });
       window.setTimeout(() => {
@@ -514,111 +353,14 @@ class PowerManage extends Component {
       }, 5000);
       return;
     }
-    if (!um_code) {
-      this.setState({
-        noChoice: true,
-        message: "您还没有输入自定义code！",
-        um_code_status: "error"
-      });
-      window.setTimeout(() => {
-        this.setState({
-          noChoice: false
-        });
-      }, 5000);
-      return;
-    }
-    if (!parent_id) {
-      this.setState({
-        noChoice: true,
-        message: "您还没有输入父级权限id！",
-        parent_id_status: "error"
-      });
-      window.setTimeout(() => {
-        this.setState({
-          noChoice: false
-        });
-      }, 5000);
-      return;
-    }
-    if (!um_title) {
-      this.setState({
-        noChoice: true,
-        message: "您还没有输入菜单名称（中文）！",
-        um_title_status: "error"
-      });
-      window.setTimeout(() => {
-        this.setState({
-          noChoice: false
-        });
-      }, 5000);
-      return;
-    }
-    if (!um_title_en) {
-      this.setState({
-        noChoice: true,
-        message: "您还没有输入菜单名称（英文）！",
-        um_title_en_status: "error"
-      });
-      window.setTimeout(() => {
-        this.setState({
-          noChoice: false
-        });
-      }, 5000);
-      return;
-    }
-    if (!um_url) {
-      this.setState({
-        noChoice: true,
-        message: "您还没有输入菜单链接！",
-        um_url_status: "error"
-      });
-      window.setTimeout(() => {
-        this.setState({
-          noChoice: false
-        });
-      }, 5000);
-      return;
-    }
-    if (!um_system) {
-      this.setState({
-        noChoice: true,
-        message: "您还没有输入当前系统！",
-        um_system_status: "error"
-      });
-      window.setTimeout(() => {
-        this.setState({
-          noChoice: false
-        });
-      }, 5000);
-      return;
-    }
     if (isAdd) {
-      /*新增按钮点击http://118.25.155.176:8080/addMenu*/
-      api.$post(
-        "http://118.25.155.176:8080/addMenu",
-        {
-          us_id,
-          um_code,
-          parent_id,
-          um_title,
-          um_title_en,
-          um_url,
-          um_system
-        },
-        res => {
-          if (res.state === 1) {
-            this.setState({
-              addEditVisible: false
-            });
-            Modal.success({ content: "权限添加成功！" });
-          }
-        }
-      );
+      //判断新增还是编辑查看
     } else {
     }
   }
   /* 操作-删除 */
   deletePermiss(id) {}
+
   render() {
     return (
       <div className="power">

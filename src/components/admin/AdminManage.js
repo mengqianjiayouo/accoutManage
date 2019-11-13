@@ -11,21 +11,14 @@ import {
   Checkbox,
   Radio,
   Row,
-  Tabs,
   Alert
 } from "antd";
 import { Api } from "../../server/_ajax.js";
-import edit_icon from "../../image/edit.svg";
-import lock_icon from "../../image/lock.svg";
-import user_icon from "../../image/juese.svg";
 import { apiList1 } from "../../server/apiMap.js";
-import { getCookie } from "../../server/cookies";
 const api = new Api();
 const Option = Select.Option;
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
-const CheckboxGroup = Checkbox.Group;
-const TabPane = Tabs.TabPane;
 const formItemLayout = {
   labelCol: { span: 7 },
   wrapperCol: { span: 14 }
@@ -76,13 +69,7 @@ class AdminManage extends Component {
     this.getData();
     this.setColumn();
   }
-  componentWillReceiveProps() {
-    /*  api.$get(  '/api/account/platform_list/', null, (res) => {
-            this.setState({
-                platList: res,
-            })
-        }); */
-  }
+
   setColumn() {
     const { formData } = this.state;
     const columns = [
@@ -163,7 +150,7 @@ class AdminManage extends Component {
       columns
     });
   }
-
+  /* 获取会员详情 */
   getUserDetail(userData) {
     let { formData } = this.state;
     console.log(userData);
@@ -187,7 +174,7 @@ class AdminManage extends Component {
       }
     );
   }
-
+  /* 跳到下一个输入框 */
   focusNextInput(e) {
     var inputs = document.getElementsByClassName("input");
 
@@ -201,7 +188,7 @@ class AdminManage extends Component {
       }
     }
   }
-
+  /* 搜索条 */
   topBar() {
     return (
       <div className="search-title" style={{ minWidth: "1170px" }}>
@@ -286,7 +273,7 @@ class AdminManage extends Component {
       </div>
     );
   }
-
+  /* 获取列表 */
   getData() {
     this.setState({
       // loading:true,
@@ -305,7 +292,7 @@ class AdminManage extends Component {
       });
     });
   }
-  // 编辑和添加
+  // 编辑和添加弹窗
   addEditModal() {
     const { modalTitle, addEditVisible, formData } = this.state;
 
@@ -467,12 +454,14 @@ class AdminManage extends Component {
       </Modal>
     );
   }
+  /* 取消保存 */
   handleModelCancel() {
     this.clearCreateForm();
     this.setState({
       addEditVisible: false
     });
   }
+  /* 清除表单 */
   clearCreateForm() {
     let { formData, platList } = this.state;
     formData.user_id = "";
@@ -489,6 +478,7 @@ class AdminManage extends Component {
       formData
     });
   }
+  /* 保存 */
   handleModelOk() {
     const { isAdd, formData } = this.state;
 
@@ -595,6 +585,7 @@ class AdminManage extends Component {
       );
     }
   }
+  /* 删除用户 */
   deleteMember(id) {
     Modal.warning({
       title: "提示",
@@ -623,7 +614,7 @@ class AdminManage extends Component {
       }
     });
   }
-  //余额修改
+  //余额修改弹窗
   moneyModal() {
     let { money, money_status, money_message } = this.state;
     return (
@@ -690,6 +681,7 @@ class AdminManage extends Component {
       </Modal>
     );
   }
+  /* 余额修改 */
   handleMoneyModelOk() {
     const { money, money_id } = this.state;
     if (money === "") {
@@ -724,6 +716,7 @@ class AdminManage extends Component {
       }
     );
   }
+  /* 重置密码 */
   resetPasswd(user_id) {
     /*         api.$post( '/api/account/reset_password/',{user_id},res=>{
             if(!res.errmsg){
@@ -734,6 +727,7 @@ class AdminManage extends Component {
             }
         }) */
   }
+
   render() {
     const addBtnStyle = {
       position: "initial"

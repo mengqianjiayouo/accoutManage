@@ -55,13 +55,13 @@ class MessageCenter extends Component {
     this.getCateList();
     this.getList();
   };
-
+  /* 获取消息列表 */
   getList() {
     const { cate, subCate, currentPage, pageSize } = this.state;
     this.setState({
       loading: true
     });
-    
+
     let data = { currentPage, limit: pageSize };
     if (cate !== "all") {
       data.cate = cate;
@@ -78,6 +78,7 @@ class MessageCenter extends Component {
       });
     });
   }
+  /* 删除消息 */
   deleteMsg(id) {
     Modal.confirm({
       title: "提示",
@@ -99,6 +100,7 @@ class MessageCenter extends Component {
       }
     });
   }
+  /* 获取分类列表 */
   getCateList() {
     // let { cateMsgObj } = this.state;
     this.setState({
@@ -119,7 +121,6 @@ class MessageCenter extends Component {
           sub[a.cate]
             ? sub[a.cate].push(a.subCate)
             : (sub[a.cate] = [a.subCate]);
-          
         }
       });
       this.setState({
@@ -131,6 +132,7 @@ class MessageCenter extends Component {
       });
     });
   }
+  /* 添加分类 */
   addCate() {
     const { addCate, addSubCate, isAddSub } = this.state;
     let data = {
@@ -197,6 +199,7 @@ class MessageCenter extends Component {
       });
     }
   }
+  /* 更新分类 */
   updateCate() {
     const { addCate, addSubCate, isAddSub, cateId } = this.state;
     let data = {
@@ -255,6 +258,7 @@ class MessageCenter extends Component {
       );
     }
   }
+  /* 删除分类 */
   deleteCate(item) {
     Modal.confirm({
       title: "提示",
@@ -297,6 +301,7 @@ class MessageCenter extends Component {
       }
     });
   }
+  /* 添加分类弹窗 */
   addCateModal() {
     let {
       addCate,
@@ -706,7 +711,7 @@ class MessageCenter extends Component {
                   </Button>
                 </div>
               </div>
-             
+
               <div className="tableWarp">
                 <Table
                   columns={colnums}

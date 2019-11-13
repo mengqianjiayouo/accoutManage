@@ -60,20 +60,9 @@ class RoleManage extends Component {
   }
 
   componentWillMount() {
-    /*  api.$get(  '/api/account/platform_list/', null, (res) => {
-            this.setState({
-                platList: res,
-            })
-        }); */
     this.setColumn();
   }
-  componentWillReceiveProps() {
-    /* api.$get(  '/api/account/platform_list/', null, (res) => {
-            this.setState({
-                platList: res,
-            })
-        }); */
-  }
+
   getRoleList() {
     this.setState({
       loading: true,
@@ -87,46 +76,9 @@ class RoleManage extends Component {
     if (kw) {
       obj.kw = kw;
     }
-    /*  api.$get(  '/api/account/role_list/',obj,(res)=>{
-            res.data.map((a,b)=>{
-                a.index = b + 1;
-                a.key = b + 1;
-            })
-            this.setState({
-                roleList:res.data,
-                loading:false,
-            })
-            if (res.data.length <= 0){
-                this.setState({
-                    locale:{
-                        emptyText:'没有相关数据'
-                    }
-                })
-            }
-        }) */
-    this.getPermissionList();
   }
-  getPermissionList() {
-    const { platform_id } = this.state;
-    /*   api.$get(  '/api/account/permission_list/',{platform_id:platform_id},(res)=>{
-            let data = res.data;
-            let ary1 = [];
-            let ary2 = [];
-            data.map((a,b) => {
-                let obj = {};
-                obj.label = a.permission_name;
-                obj.value = a.permission_id + '';
-                ary1.push(obj);
-                ary2.push(a.permission_id + '');
-
-            })
-            this.setState({
-                permissionsOption:ary1,
-                permissionsAllList:ary2
-            })
-
-        }) */
-  }
+  //获取权限列表
+  getPermissionList() {}
   topBar() {
     return (
       <div className="search-title" style={{ minWidth: "1170px" }}>
@@ -299,24 +251,8 @@ class RoleManage extends Component {
       columns
     });
   }
-  getRoleDetail(role_id) {
-    /*   api.$get(  '/api/account/role_detail/',{role_id},res=>{
-            let ary = [];
-            res.permissions && res.permissions.map((a)=>{
-                ary.push(a.permission_id+'')
-            })
-
-            this.setState({
-                addEditVisible:true,
-                isAdd:false,
-                role_flag:res.role_flag,
-                role_name:res.role_name,
-                permissionsList:ary,
-                CheckAll:ary.length == this.state.permissionsAllList.length,
-                Indeterminate1: !!ary.length && (ary.length < this.state.permissionsAllList.length),
-            })
-        }) */
-  }
+  //角色详情
+  getRoleDetail(role_id) {}
   // 编辑和添加
   addEditModal() {
     const {
@@ -559,11 +495,7 @@ class RoleManage extends Component {
             }) */
     }
   }
-  deleteRole(id) {
-    /* api.$post(  '/api/account/delete_role/',{role_id:id},()=>{
-            this.getRoleList()
-        }) */
-  }
+  deleteRole(id) {}
   render() {
     return (
       <div className="role">

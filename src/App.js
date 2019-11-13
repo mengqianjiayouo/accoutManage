@@ -1,29 +1,43 @@
 import React from "react";
-import logo from "./logo.svg";
 // import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Layout } from "antd";
 
 import createHistory from "history/createBrowserHistory";
-// import createHistory from "history/createHashHistory";
-import pageApp from "./components/App";
+//登录
 import Login from "./components/Login";
 import "./App.css";
+//会员管理
 import AdminManage from "./components/admin/AdminManage";
+//侧边菜单
 import SideBar from "./components/SideBar";
+//头部
 import PageHeader from "./components/Header";
+//代理商管理
 import AgentManage from "./components/agent/AgentManage";
+//角色管理
 import RoleManage from "./components/role/RoleManage";
+//权限管理
 import PowerManage from "./components/power/PowerManage";
+//消息修改
 import MessageCreate from "./components/messageControl/MessageCreate";
+//用户产品
 import UserProductManage from "./components/products/UserProductManage";
+//平台产品
 import PlatProductManage from "./components/products/PlatProductManage";
+//订单管理
 import OrderManage from "./components/order/OrderManage";
+//仓库管理
 import StoreManage from "./components/store/StoreManage";
+//第三方承包管理
 import ContractorManage from "./components/contractor/ContractorManage";
+//厂家管理
 import FactoryManage from "./components/factory/FactoryManage";
+//消息管理
 import MessageCenter from "./components/messageControl/MessageCenter";
+//banner修改
 import BannerEdit from "./components/messageControl/BannerEdit";
+//意见管理
 import YijianManage from "./components/yijianManage/index";
 const { Header, Sider, Content } = Layout;
 

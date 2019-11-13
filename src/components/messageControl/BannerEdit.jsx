@@ -1,25 +1,11 @@
 import React, { Component } from "react";
-import {
-  Input,
-  Button,
-  Select,
-  Collapse,
-  Modal,
-  Row,
-  Col,
-  Icon,
-  List,
-  Upload
-} from "antd";
+import { Button, Modal, Icon, Upload } from "antd";
 
 // 引入编辑器样式
 import { Api } from "../../server/_ajax";
-import $ from "jquery";
 import { apiList2, serverPath2 } from "../../server/apiMap";
-const { Panel } = Collapse;
-// const serverPath2 = "https://news.cnshanzhi.com";
+
 const api = new Api();
-const Option = Select.Option;
 class BannerEdit extends Component {
   constructor(props) {
     super(props);
